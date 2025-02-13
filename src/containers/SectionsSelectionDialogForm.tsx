@@ -26,6 +26,14 @@ const sx = {
             gap: '40px'
         },
     },
+    dialogTitle: {
+        color: '#262626',
+        fontFamily: 'Roboto',
+        fontSize: 24,
+        fontStyle: 'normal',
+        fontWeight: 500,
+        lineHeight: 1.33,
+    },
     dialogContent: {
         p: 0,
         overflow: 'hidden',
