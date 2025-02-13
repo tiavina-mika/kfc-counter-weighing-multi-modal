@@ -31,11 +31,20 @@ const sx = {
     fontWeight: 500,
     lineHeight: '140%',
   },
-  weightColumn: {
+  weightContainer: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: '32px 0px',
+  },
+  weightColumn: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '16px',
+    width: 120
   },
   weightLabel: {
     color: primaryColor,
@@ -43,6 +52,8 @@ const sx = {
     fontStyle: 'normal',
     fontWeight: 400,
     lineHeight: '140%',
+    textAlign: 'center',
+    flex: 1
   },
   weightValue: {
     color: primaryColor,
@@ -50,6 +61,8 @@ const sx = {
     fontStyle: 'normal',
     fontWeight: 500,
     lineHeight: '120%',
+    height: 46, // important to keep the height of the card
+    flex: 1
   },
   weightUnit: {
     color: '#7C7C7C',
@@ -142,33 +155,34 @@ const SectionsField = ({ options = [], values = [], setFieldValue }: Props) => {
               {/* fields */}
               <Stack alignItems="center">
                 {/* ------- top: weight ------- */}
-                <Stack direction="row" sx={{ gap: "96px" }}>
-                  {/* label */}
-                  <Box sx={sx.weightColumn}>
-                    <Typography sx={sx.weightLabel}>
-                      Poids initiale
-                    </Typography>
-                    <Typography sx={sx.weightValue}>
-                      125
-                    </Typography>
-                    <Typography sx={sx.weightUnit}>
-                      kg
-                    </Typography>
-                  </Box>
-                  {/* value */}
-                  <Box sx={sx.weightColumn}>
-                    <Typography sx={sx.weightLabel}>
-                      Poids de la <br />
-                      contre-pesée
-                    </Typography>
-                    <Typography sx={sx.weightValue}>
-                      0
-                    </Typography>
-                    <Typography sx={sx.weightUnit}>
-                      kg
-                    </Typography>
-                  </Box>
-                </Stack>
+                <Box sx={sx.weightContainer}>
+                  <Stack direction="row" sx={{ gap: "96px" }}>
+                    {/* label */}
+                    <Box sx={sx.weightColumn}>
+                      <Typography sx={sx.weightLabel}>
+                        Poids initiale
+                      </Typography>
+                      <Typography sx={sx.weightValue}>
+                        125
+                      </Typography>
+                      <Typography sx={sx.weightUnit}>
+                        kg
+                      </Typography>
+                    </Box>
+                    {/* value */}
+                    <Box sx={sx.weightColumn}>
+                      <Typography sx={sx.weightLabel}>
+                        Poids de la contre-pesée
+                      </Typography>
+                      <Typography sx={sx.weightValue}>
+                        0
+                      </Typography>
+                      <Typography sx={sx.weightUnit}>
+                        kg
+                      </Typography>
+                    </Box>
+                  </Stack>
+                </Box>
                 {/* -------- bottom: reason -------- */}
                 <Stack direction="row" sx={{ gap: "16px", alignSelf: "stretch" }}>
                   {reasons.map((reason: Record<string, any>, reasonIndex: number) => {
