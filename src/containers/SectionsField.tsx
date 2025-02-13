@@ -22,6 +22,37 @@ const StyleAccordion = styled(Accordion, {
   },
 }))
 
+const StyleCard = styled(Card, {
+  shouldForwardProp: (prop) => prop !== "isSelected" && prop !== "hasError"
+})(({ isSelected = false, hasError = false }: { isSelected: boolean; hasError: boolean }) => {
+  const styles: Record<string, any> = {
+    padding: '0px 16px',
+    borderRadius: '6px',
+    border: '1px solid #E6E6E6',
+    background: '#FFF',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '16px',
+    cursor: 'pointer',
+    // width: '196px',
+    flex: 1,
+    height: '140px',
+    '& img': {
+      width: '32px',
+      height: '32px',
+    },
+  }
+
+  if (isSelected && !hasError) {
+    styles.border = '2px solid #2196F3'
+  } else if (hasError) {
+    styles.border = '1px solid ' + errorColor
+  }
+
+  return styles
+})
 
 const sx = {
   sections: {
@@ -117,28 +148,6 @@ const sx = {
       justifyContent: 'center',
     }
   },
-  reasonCard: {
-    padding: '0px 16px',
-    borderRadius: '6px',
-    border: '1px solid #E6E6E6',
-    background: '#FFF',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '16px',
-    cursor: 'pointer',
-    // width: '196px',
-    flex: 1,
-    height: '140px',
-    '& img': {
-      width: '32px',
-      height: '32px',
-    },
-  },
-  selectedReasonCard: {
-    border: '2px solid #2196F3',
-  }
 };
 
 const reasons = [
@@ -151,7 +160,7 @@ type Props = {
   options: Record<string, any>[]
   values: Record<string, any>[]
   setFieldValue: (field: string, value: any) => void
-  errors?: Record<string, any>[] | string
+  errors?: Record<string, any>[] | string | undefined | string[]
 }
 
 const SectionsField = ({
@@ -182,8 +191,8 @@ const SectionsField = ({
           key={section.objectId + sectionIndex}
           expanded={selectedSection?.objectId === section.objectId}
           onChange={() => handleSelectSection(section)}
-          // if error is the global error message
-          hasError={!!(errors && typeof errors === 'string')}
+          // if error is the global error message or any individual error
+          hasError={!!(errors && typeof errors === 'string') || !!errors}
         >
           {/* section details */}
           <AccordionSummary
@@ -246,19 +255,17 @@ const SectionsField = ({
                   {reasons.map((reason: Record<string, any>, reasonIndex: number) => {
                     const isSelectedReason = values[sectionIndex]?.reason === reason.value
                     return (
-                      <Card
+                      <StyleCard
                         key={reason.value + reasonIndex}
-                        sx={{
-                          ...sx.reasonCard,
-                          ...(isSelectedReason ? sx.selectedReasonCard : {}),
-                        }}
                         onClick={() => handleSelectReason(reason, sectionIndex)}
+                        isSelected={isSelectedReason}
+                        hasError={!!(errors && (errors[sectionIndex] as any)?.reason)}
                       >
                         <img alt={reason.label} src={`/icons/${reason.icon}.svg`} />
                         <Typography sx={sx.reasonLabel}>
                           {reason.label}
                         </Typography>
-                      </Card>
+                      </StyleCard>
                     )
                   })}
                 </Stack>
