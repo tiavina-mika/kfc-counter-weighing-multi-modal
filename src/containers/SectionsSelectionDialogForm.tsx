@@ -18,7 +18,7 @@ import SectionsField from "./SectionsField"
 
 const sectionSchema = Yup.object().shape({
     weight: Yup.number().required('Veuillez saisir un poids.'),
-    reason: Yup.string().required('Veuillez sélectionner une raison.')
+    reason: Yup.string().required('Veuillez sélectionné le motif de cette contre-pesée.')
 })
 const schema = Yup.object().shape({
     sections: Yup.array().of(sectionSchema).test(
