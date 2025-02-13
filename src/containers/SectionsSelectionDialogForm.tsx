@@ -26,6 +26,18 @@ const sx = {
             gap: '40px'
         },
     },
+    dialogContent: {
+        p: 0,
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+    },
+    dialogActions: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
 }
 
 type Props = {
@@ -57,21 +69,21 @@ const SectionsSelectionDialogForm = ({
 
     return (
         <Dialog open={open} onClose={onClose} sx={sx.dialog}>
-            <DialogTitle>
+            <DialogTitle sx={{ p: 0 }}>
                 {recipe?.uniqueCode} - {recipe?.name}
             </DialogTitle>
-            <DialogContent sx={{ p: 0, overflow: 'hidden' }}>
+            <IconButton
+                aria-label="close"
+                onClick={handleCancel}
+                sx={{ position: 'absolute', top: 8, right: 8 }}
+            >
+                <CloseIcon />
+            </IconButton>
+            <DialogContent sx={sx.dialogContent}>
                 <DialogContentText>
                     Choisissez la section sur laquelle vous devez faire une contre-pesée.
                 </DialogContentText>
-                <IconButton
-                    aria-label="close"
-                    onClick={handleCancel}
-                    sx={{ position: 'absolute', top: 8, right: 8 }}
-                >
-                    <CloseIcon />
-                </IconButton>
-                <Box sx={{ pt: 2 }}>
+                <Box>
                     <Formik
                         innerRef={formikRef}
                         initialValues={{ recipe: null }}
@@ -88,7 +100,10 @@ const SectionsSelectionDialogForm = ({
                     </Formik>
                 </Box>
             </DialogContent>
-            <DialogActions  sx={{ p: 0 }}>
+            <DialogActions  sx={sx.dialogActions}>
+                <Button onClick={onClose} color="primary">
+                    Retour
+                </Button>
                 <Button onClick={handleConfirm} color="primary" variant="contained">
                     Suivant
                 </Button>
