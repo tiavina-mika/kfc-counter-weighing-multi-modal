@@ -2,19 +2,24 @@ import { useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import RecipeDialogForm from './containers/RecipeDialogForm';
-import { Container, Box } from '@mui/material';
+import { Box } from '@mui/material';
+import SectionsSelectionDialogForm from './containers/SectionsSelectionDialogForm';
+import { packagingExecutions } from './utils/data';
 
 const App = () => {
   const [isOpenRecipeDialog, setIsOpenRecipeDialog] = useState(false)
-  const [selectedRecipe, setSelectedRecipe] = useState<Record<string, any> | null>(null)
+  const [selectedRecipe, setSelectedRecipe] = useState<Record<string, any> | null>(packagingExecutions[0].recipe)
+  // const [selectedRecipe, setSelectedRecipe] = useState<Record<string, any> | null>(null)
 
   const toggleOpenRecipeDialog = () => setIsOpenRecipeDialog(!isOpenRecipeDialog)
 
   const handleSelectRecipe = (recipe: Record<string, any>) => {
-    console.log('recipe: ', recipe);
-    return
     setSelectedRecipe(recipe)
     toggleOpenRecipeDialog()
+  }
+
+  const handleSubmitSections = (values: Record<string, any>) => {
+    console.log('values', values)
   }
 
   return (
@@ -26,6 +31,12 @@ const App = () => {
           onClose={toggleOpenRecipeDialog}
           open={isOpenRecipeDialog}
           onSubmit={handleSelectRecipe}
+        />
+        <SectionsSelectionDialogForm
+          recipe={selectedRecipe}
+          open={!!selectedRecipe}
+          onClose={() => setSelectedRecipe(null)}
+          onSubmit={handleSubmitSections}
         />
       </Stack>
     </Box>
