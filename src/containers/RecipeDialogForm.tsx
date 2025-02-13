@@ -1,15 +1,17 @@
-import React, { useState } from "react"
-import { ErrorMessage, useFormik } from "formik"
+import { useRef, useState } from "react"
+import { Form, Formik } from "formik"
 import {
     Button,
     Dialog,
     DialogContent,
     DialogContentText,
     DialogActions,
-    InputLabel,
     FormHelperText,
     Stack,
+    Box,
+    IconButton,
 } from "@mui/material"
+import CloseIcon from '@mui/icons-material/Close'
 import * as Yup from "yup"
 import FormikAutocompleteField from "../components/FormikAutocompleteField"
 import { searchRecipesByUniqueCodeOrName } from "../utils/utils"
@@ -37,11 +39,11 @@ const getOptionLabel = (recipe: Record<string, any>) => {
 
 const sx = {
     dialog: {
-        width: 600,
-        padding: 12
-    },
-    dialogTitle: {
-        paddingBottom: 0,
+        '& .MuiDialog-paper': {
+            width: 700,
+            padding: '32px 24px',
+            gap: '40px'
+        },
     },
 }
 
@@ -55,7 +57,12 @@ const RecipeDialogForm = ({
     open,
     onSubmit,
 }: Props) => {
+    const formikRef = useRef(null)
     const [searchedRecipes, setSearchedRecipes] = useState<Record<string, any>[]>([])
+
+    const handleConfirm = () => {
+        (formikRef.current as any)?.submitForm()
+    }
 
     const handleSearchRecipes = (search: string) => {
         const recipes = searchRecipesByUniqueCodeOrName(search)
@@ -71,58 +78,54 @@ const RecipeDialogForm = ({
         onClose()
     }
 
-    const formik = useFormik({
-        onSubmit: _handleSubmit,
-        // validationSchema: schema,
-        initialValues: {
-            recipe: null
-        }
-    });
-
-    const { handleSubmit, errors, values, setFieldValue, submitForm } = formik;
-
     const handleCancel = () => {
         onClose()
     }
 
     return (
-        <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" sx={sx.dialog}>
-            <DialogContent>
-                <DialogContentText sx={{ pt: 1, pb: 2 }}>
-                    Choisissez la recette pour laquelle vous souhaitez faire une contre-pesée.
+        <Dialog open={true} onClose={onClose} sx={sx.dialog}>
+            <DialogContent sx={{ p: 0, overflow: 'hidden' }}>
+                <DialogContentText>
+                    Choisissez la recette pour laquelle vous souhaitez faire une <br /> contre-pesée.
                 </DialogContentText>
-                <form onSubmit={handleSubmit}>
-                    <Stack direction="row" spacing={2}>
-                        <Stack spacing={1} sx={{ flex: 1 }}>
-                            <InputLabel>
-                                Nom de la recette
-                            </InputLabel>
-                            <FormikAutocompleteField
-                                name="recipe"
-                                setFieldValue={setFieldValue}
-                                options={formatOptions(searchedRecipes)}
-                                getOptionLabel={getOptionLabel}
-                                onSearch={handleSearchRecipes}
-                                onBlur={handleClearSearch}
-                              />
-                              <ErrorMessage
-                                name="recipe"
-                                render={(message) => (
-                                  <FormHelperText error>
-                                    {message}
-                                  </FormHelperText>
-                                )}
-                              />
-                        </Stack>
-                    </Stack>
-                </form>
+                <IconButton
+                    aria-label="close"
+                    onClick={handleCancel}
+                    sx={{ position: 'absolute', top: 8, right: 8 }}
+                >
+                    <CloseIcon />
+                </IconButton>
+                <Box sx={{ pt: 2 }}>
+                    <Formik
+                        innerRef={formikRef}
+                        initialValues={{ recipe: null }}
+                        // validationSchema={schema}
+                        onSubmit={_handleSubmit}
+                    >
+                        {({ errors, setFieldValue }) => (
+                            <Form>
+                                <Stack direction="row" spacing={2}>
+                                    <Stack spacing={1} sx={{ flex: 1 }}>
+                                        <FormikAutocompleteField
+                                            name="recipe"
+                                            label="Nom de la recette"
+                                            setFieldValue={setFieldValue}
+                                            options={formatOptions(searchedRecipes)}
+                                            getOptionLabel={getOptionLabel}
+                                            onSearch={handleSearchRecipes}
+                                            onBlur={handleClearSearch}
+                                        />
+                                        {errors.recipe && <FormHelperText error>{errors.recipe}</FormHelperText>}
+                                    </Stack>
+                                </Stack>
+                            </Form>
+                        )}
+                    </Formik>
+                </Box>
             </DialogContent>
-            <DialogActions>
-                <Button onClick={handleCancel} color="primary">
-                    Annuler
-                </Button>
-                <Button onClick={submitForm} color="primary" variant="contained">
-                    Confirmer
+            <DialogActions  sx={{ p: 0 }}>
+                <Button onClick={handleConfirm} color="primary" variant="contained">
+                    Suivant
                 </Button>
             </DialogActions>
         </Dialog>
