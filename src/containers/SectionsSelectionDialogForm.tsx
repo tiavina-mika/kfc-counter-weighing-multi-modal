@@ -11,12 +11,16 @@ import {
     DialogTitle,
 } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close'
-// import * as Yup from "yup"
+import * as Yup from "yup"
 import SectionsField from "./SectionsField"
 
-// const schema = Yup.object().shape({
-//     recipe: Yup.object().required('Veuillez saisir la recette sur laquelle vous souhaitez faire une contre-pesée.')
-// });
+const sectionSchema = Yup.object().shape({
+    weight: Yup.number().required('Veuillez saisir un poids.'),
+    reason: Yup.string().required('Veuillez sélectionner une raison.')
+})
+const schema = Yup.object().shape({
+    sections: Yup.array().of(sectionSchema).min(1, 'Veuillez sélectionner au moins une section.')
+});
 
 const sx = {
     dialog: {
@@ -97,7 +101,7 @@ const SectionsSelectionDialogForm = ({
                     <Formik
                         innerRef={formikRef}
                         initialValues={{ sections: [] }}
-                        // validationSchema={schema}
+                        validationSchema={schema}
                         onSubmit={_handleSubmit}
                     >
                         {({ errors, setFieldValue, values }) => (
@@ -106,6 +110,7 @@ const SectionsSelectionDialogForm = ({
                                     options={recipe?.sections}
                                     values={values.sections}
                                     setFieldValue={setFieldValue}
+                                    errors={errors?.sections}
                                 />
                             </Form>
                         )}
