@@ -19,7 +19,11 @@ const sectionSchema = Yup.object().shape({
     reason: Yup.string().required('Veuillez sélectionner une raison.')
 })
 const schema = Yup.object().shape({
-    sections: Yup.array().of(sectionSchema).min(1, 'Veuillez sélectionner au moins une section.')
+    sections: Yup.array().of(sectionSchema).test(
+        'at-least-one-weight',
+        'Veuillez saisir un poids pour au moins une section.',
+        (sections) => sections?.some(section => section.weight)
+    ).min(1, 'Veuillez sélectionner au moins une section.')
 });
 
 const sx = {
