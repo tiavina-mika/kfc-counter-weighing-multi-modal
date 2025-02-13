@@ -17,11 +17,7 @@ import FormikAutocompleteField from "../components/FormikAutocompleteField"
 import { searchRecipesByUniqueCodeOrName } from "../utils/utils"
 
 const schema = Yup.object().shape({
-    startDate: Yup.date().required("Veuillez sélectionner une date de début"),
-    endDate: Yup
-        .date()
-        .required("Veuillez sélectionner une date de fin")
-        .min(Yup.ref('startDate'), 'La date de fin doit être supérieure à la date de début')
+    recipe: Yup.object().required('Veuillez saisir la recette sur laquelle vous souhaitez faire une contre-pesée.')
 });
 
 const formatOptions = (recipes: Record<string, any>[] = []) => {
@@ -83,7 +79,7 @@ const RecipeDialogForm = ({
     }
 
     return (
-        <Dialog open={true} onClose={onClose} sx={sx.dialog}>
+        <Dialog open={open} onClose={onClose} sx={sx.dialog}>
             <DialogContent sx={{ p: 0, overflow: 'hidden' }}>
                 <DialogContentText>
                     Choisissez la recette pour laquelle vous souhaitez faire une <br /> contre-pesée.
@@ -99,7 +95,7 @@ const RecipeDialogForm = ({
                     <Formik
                         innerRef={formikRef}
                         initialValues={{ recipe: null }}
-                        // validationSchema={schema}
+                        validationSchema={schema}
                         onSubmit={_handleSubmit}
                     >
                         {({ errors, setFieldValue }) => (
