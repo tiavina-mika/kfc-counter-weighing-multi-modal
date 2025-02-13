@@ -146,10 +146,17 @@ type Props = {
   options: Record<string, any>[]
   values: Record<string, any>[]
   setFieldValue: (field: string, value: any) => void
+  errors?: Record<string, any>
 }
 
-const SectionsField = ({ options = [], values = [], setFieldValue }: Props) => {
+const SectionsField = ({
+  options = [],
+  values = [],
+  errors,
+  setFieldValue
+}: Props) => {
   const [selectedSection, setSelectedSection] = useState<Record<string, any> | null>(null)
+  console.log('errors: ', errors);
 
   const handleSelectSection = (section: Record<string, any>) => {
     setSelectedSection(section)
