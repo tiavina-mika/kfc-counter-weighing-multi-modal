@@ -76,6 +76,15 @@ const StyledWeightInput = styled(TextField, {
       textAlign: 'center',
       display: 'flex',
       justifyContent: 'center',
+      // remove arrows for chrome, safari, edge
+      '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+        '-webkit-appearance': 'none',
+        margin: 0
+      },
+      // remove arrows for firefox
+      '&[type=number]': {
+        '-moz-appearance': 'textfield'
+      }
     }
   }
 
