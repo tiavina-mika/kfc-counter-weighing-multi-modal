@@ -8,6 +8,7 @@ import { ChangeEvent, useState } from 'react';
 
 const primaryColor = '#262626'
 const errorColor = '#F44259'
+const activeColor = '#2196F3'
 
 const StyleAccordion = styled(Accordion, {
   shouldForwardProp: (prop) => prop !== "hasError"
@@ -46,9 +47,42 @@ const StyleCard = styled(Card, {
   }
 
   if (isSelected && !hasError) {
-    styles.border = '2px solid #2196F3'
+    styles.border = '2px solid ' + activeColor
   } else if (hasError) {
     styles.border = '1px solid ' + errorColor
+  }
+
+  return styles
+})
+
+const StyledWeightInput = styled(TextField, {
+  shouldForwardProp: (prop) => prop !== "isPositiveNumber" && prop !== "hasError"
+})(({ isPositiveNumber = false, hasError = false }: { isPositiveNumber: boolean; hasError: boolean }) => {
+  const styles: Record<string, any> = {
+    flex: 1,
+    padding: 0,
+    '& .MuiOutlinedInput-notchedOutline': {
+      textAlign: 'center',
+      border: 'none'
+    },
+    '& .MuiInputBase-input': {
+      fontSize: '40px',
+      fontStyle: 'normal',
+      fontWeight: 500,
+      lineHeight: '120%',
+      padding: 0,
+      minWidth: 48,
+      textAlign: 'center',
+      display: 'flex',
+      justifyContent: 'center',
+    }
+  }
+
+  if (isPositiveNumber) {
+    styles['& .MuiInputBase-input'] = {
+      ...styles['& .MuiInputBase-input'],
+      color: activeColor
+    }
   }
 
   return styles
@@ -237,11 +271,12 @@ const SectionsField = ({
                         Poids de la contre-pesée
                       </Typography>
                       <Box sx={sx.weightValueContainer}>
-                        <TextField
+                        <StyledWeightInput
                           type="number"
                           value={values[sectionIndex]?.weight || 0}
                           onChange={handleChangeWeight(sectionIndex)}
-                          sx={sx.weightInput}
+                          isPositiveNumber={values[sectionIndex]?.weight > 0}
+                          hasError={!!(errors && (errors[sectionIndex] as any)?.weight)}
                         />
                       </Box>
                       <Typography sx={sx.weightUnit}>
@@ -251,23 +286,32 @@ const SectionsField = ({
                   </Stack>
                 </Box>
                 {/* -------- bottom: reason -------- */}
-                <Stack direction="row" sx={{ gap: "16px", alignSelf: "stretch" }}>
-                  {reasons.map((reason: Record<string, any>, reasonIndex: number) => {
-                    const isSelectedReason = values[sectionIndex]?.reason === reason.value
-                    return (
-                      <StyleCard
-                        key={reason.value + reasonIndex}
-                        onClick={() => handleSelectReason(reason, sectionIndex)}
-                        isSelected={isSelectedReason}
-                        hasError={!!(errors && (errors[sectionIndex] as any)?.reason)}
-                      >
-                        <img alt={reason.label} src={`/icons/${reason.icon}.svg`} />
-                        <Typography sx={sx.reasonLabel}>
-                          {reason.label}
-                        </Typography>
-                      </StyleCard>
-                    )
-                  })}
+                <Stack spacing={16 / 6} sx={{ alignSelf: "stretch" }}>
+                  {/* list of reasons */}
+                  <Stack direction="row" sx={{ gap: "16px", alignSelf: "stretch" }}>
+                    {reasons.map((reason: Record<string, any>, reasonIndex: number) => {
+                      const isSelectedReason = values[sectionIndex]?.reason === reason.value
+                      return (
+                        <StyleCard
+                          key={reason.value + reasonIndex}
+                          onClick={() => handleSelectReason(reason, sectionIndex)}
+                          isSelected={isSelectedReason}
+                          hasError={!!(errors && (errors[sectionIndex] as any)?.reason)}
+                        >
+                          <img alt={reason.label} src={`/icons/${reason.icon}.svg`} />
+                          <Typography sx={sx.reasonLabel}>
+                            {reason.label}
+                          </Typography>
+                        </StyleCard>
+                      )
+                    })}
+                  </Stack>
+                  {/* reason error message */}
+                  {errors && (errors[sectionIndex] as any)?.reason && (
+                    <Typography color="error" variant="caption">
+                      {(errors[sectionIndex] as any)?.reason}
+                    </Typography>
+                  )}
                 </Stack>
               </Stack>
             </Stack>
