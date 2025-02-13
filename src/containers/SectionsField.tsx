@@ -31,6 +31,13 @@ const sx = {
     fontWeight: 500,
     lineHeight: '140%',
   },
+  sectionDescription: {
+    color: '#7C7C7C',
+    fontSize: '16px',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    lineHeight: '150%',
+  },
   weightContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -149,7 +156,7 @@ const SectionsField = ({ options = [], values = [], setFieldValue }: Props) => {
           <AccordionDetails>
             <Stack>
               {/* main label */}
-              <Typography>
+              <Typography sx={sx.sectionDescription}>
                 Pesez l'ensemble de la section restante puis saisissez son poids et le motif de cette contre-pesée.
               </Typography>
 
