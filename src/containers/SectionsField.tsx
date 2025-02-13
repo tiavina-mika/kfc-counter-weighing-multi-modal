@@ -29,16 +29,6 @@ const sx = {
     display: 'flex',
     flexDirection: 'column',
   },
-  accordion: {
-    padding: '4px',
-    borderRadius: '8px',
-    border: '1px solid #E6E6E6',
-    background: '#FFF',
-    boxShadow: '0px 1px 5px 0px rgba(0, 0, 0, 0.15)',
-    '&.MuiPaper-root::before': {
-      display: 'none',
-    },
-  },
   sectionName: {
     color: primaryColor,
     fontSize: '20px',
@@ -193,7 +183,6 @@ const SectionsField = ({
           expanded={selectedSection?.objectId === section.objectId}
           onChange={() => handleSelectSection(section)}
           hasError={!!(errors && typeof errors === 'string')}
-          // sx={sx.accordion}
         >
           {/* section details */}
           <AccordionSummary
