@@ -3,7 +3,6 @@ export const packagingExecutions = [
     recipe: {
       objectId: 'recipe1',
       uniqueCode: 'RCP1',
-      // random recipe name
       name: "Patate douce",
       sections: [
         {
