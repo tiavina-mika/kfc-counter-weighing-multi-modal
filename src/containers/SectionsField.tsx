@@ -36,7 +36,7 @@ const StyleCard = styled(Card, {
     justifyContent: 'center',
     gap: '16px',
     cursor: 'pointer',
-    // width: '196px',
+    boxShadow: 'none',
     flex: 1,
     height: '140px',
     '& img': {
