@@ -9,6 +9,8 @@ import {
     Box,
     IconButton,
     DialogTitle,
+    FormHelperText,
+    Stack,
 } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close'
 import * as Yup from "yup"
@@ -21,7 +23,7 @@ const sectionSchema = Yup.object().shape({
 const schema = Yup.object().shape({
     sections: Yup.array().of(sectionSchema).test(
         'at-least-one-weight',
-        'Veuillez saisir un poids pour au moins une section.',
+        'Veuillez compléter la section sur laquelle vous souhaitez faire votre contre-pesée.',
         (sections) => sections?.some(section => section.weight)
     ).min(1, 'Veuillez sélectionner au moins une section.')
 });
@@ -110,12 +112,17 @@ const SectionsSelectionDialogForm = ({
                     >
                         {({ errors, setFieldValue, values }) => (
                             <Form>
-                                <SectionsField
-                                    options={recipe?.sections}
-                                    values={values.sections}
-                                    setFieldValue={setFieldValue}
-                                    errors={errors?.sections}
-                                />
+                                <Stack spacing={1}>
+                                    <SectionsField
+                                        options={recipe?.sections}
+                                        values={values.sections}
+                                        setFieldValue={setFieldValue}
+                                        errors={errors?.sections}
+                                    />
+                                    {errors?.sections && typeof errors.sections === 'string' && (
+                                        <FormHelperText error>{errors.sections}</FormHelperText>
+                                    )}
+                                </Stack>
                             </Form>
                         )}
                     </Formik>
