@@ -3,10 +3,25 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Box, Card, Stack, TextField } from '@mui/material';
+import { Box, Card, Stack, styled, TextField } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 
 const primaryColor = '#262626'
+const errorColor = '#F44259'
+
+const StyleAccordion = styled(Accordion, {
+  shouldForwardProp: (prop) => prop !== "hasError"
+})(({ hasError = false }: { hasError: boolean }) => ({
+  padding: '4px',
+  borderRadius: '8px',
+  border: hasError ? '1px solid ' + errorColor : '1px solid #E6E6E6',
+  background: '#FFF',
+  boxShadow: '0px 1px 5px 0px rgba(0, 0, 0, 0.15)',
+  '&.MuiPaper-root::before': {
+    display: 'none',
+  },
+}))
+
 
 const sx = {
   sections: {
@@ -146,7 +161,7 @@ type Props = {
   options: Record<string, any>[]
   values: Record<string, any>[]
   setFieldValue: (field: string, value: any) => void
-  errors?: Record<string, any>
+  errors?: Record<string, any>[] | string
 }
 
 const SectionsField = ({
@@ -173,11 +188,12 @@ const SectionsField = ({
   return (
     <Box sx={sx.sections}>
       {options.map((section: Record<string, any>, sectionIndex: number) => (
-        <Accordion
+        <StyleAccordion
           key={section.objectId + sectionIndex}
           expanded={selectedSection?.objectId === section.objectId}
           onChange={() => handleSelectSection(section)}
-          sx={sx.accordion}
+          hasError={!!(errors && typeof errors === 'string')}
+          // sx={sx.accordion}
         >
           {/* section details */}
           <AccordionSummary
@@ -259,7 +275,7 @@ const SectionsField = ({
               </Stack>
             </Stack>
           </AccordionDetails>
-        </Accordion>
+        </StyleAccordion>
       ))}
     </Box>
   )
