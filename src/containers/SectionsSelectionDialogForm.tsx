@@ -67,6 +67,8 @@ const SectionsSelectionDialogForm = ({
     }
 
     const _handleSubmit = (values: Record<string, any>) => {
+        console.log('values: ', values);
+        return
         onSubmit(values)
         onClose()
     }
@@ -94,14 +96,16 @@ const SectionsSelectionDialogForm = ({
                 <Box>
                     <Formik
                         innerRef={formikRef}
-                        initialValues={{ recipe: null }}
+                        initialValues={{ sections: [] }}
                         // validationSchema={schema}
                         onSubmit={_handleSubmit}
                     >
-                        {({ errors, setFieldValue }) => (
+                        {({ errors, setFieldValue, values }) => (
                             <Form>
                                 <SectionsField
-                                    sections={recipe?.sections}
+                                    options={recipe?.sections}
+                                    values={values.sections}
+                                    setFieldValue={setFieldValue}
                                 />
                             </Form>
                         )}
