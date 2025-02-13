@@ -106,7 +106,7 @@ const sx = {
       fontWeight: 500,
       lineHeight: '120%',
       padding: 0,
-      width: 48,
+      minWidth: 48,
       textAlign: 'center',
       display: 'flex',
       justifyContent: 'center',
@@ -160,7 +160,7 @@ const SectionsField = ({ options = [], values = [], setFieldValue }: Props) => {
   }
 
   const handleChangeWeight = (sectionIndex: number) => (event: ChangeEvent<HTMLInputElement>) => {
-    setFieldValue(`sections[${sectionIndex}].weight`, event.target.value)
+    setFieldValue(`sections[${sectionIndex}].weight`, +event.target.value)
   }
 
   return (
