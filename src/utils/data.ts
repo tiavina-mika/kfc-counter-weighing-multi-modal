@@ -3,6 +3,8 @@ export const packagingExecutions = [
     recipe: {
       objectId: 'recipe1',
       uniqueCode: 'RCP1',
+      // random recipe name
+      name: "Patate douce",
       sections: [
         {
           objectId: 'section11',
@@ -19,6 +21,7 @@ export const packagingExecutions = [
     recipe: {
       objectId: 'recipe2',
       uniqueCode: 'RCP2',
+      name: "Pizza Margherita",
       sections: [
         {
           objectId: 'section21',
@@ -35,6 +38,7 @@ export const packagingExecutions = [
     recipe: {
       objectId: 'recipe3',
       uniqueCode: 'RCP3',
+      name: "Poulet rôti",
       sections: [
         {
           objectId: 'section31',
@@ -51,6 +55,7 @@ export const packagingExecutions = [
     recipe: {
       objectId: 'recipe4',
       uniqueCode: 'RCP4',
+      name: "Pâtes carbonara",
       sections: [
         {
           objectId: 'section41',
@@ -67,6 +72,7 @@ export const packagingExecutions = [
     recipe: {
       objectId: 'recipe5',
       uniqueCode: 'RCP5',
+      name: "Salade César",
       sections: [
         {
           objectId: 'section51',
@@ -83,6 +89,7 @@ export const packagingExecutions = [
     recipe: {
       objectId: 'recipe6',
       uniqueCode: 'RCP6',
+      name: "Ratatouille",
       sections: [
         {
           objectId: 'section61',
@@ -99,6 +106,7 @@ export const packagingExecutions = [
     recipe: {
       objectId: 'recipe7',
       uniqueCode: 'RCP7',
+      name: "Poulet curry",
       sections: [
         {
           objectId: 'section71',
@@ -115,6 +123,7 @@ export const packagingExecutions = [
     recipe: {
       objectId: 'recipe8',
       uniqueCode: 'RCP8',
+      name: "Tarte aux pommes",
       sections: [
         {
           objectId: 'section81',
