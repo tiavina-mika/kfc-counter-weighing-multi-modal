@@ -173,7 +173,7 @@ const SectionsField = ({
   console.log('errors: ', errors);
 
   const handleSelectSection = (section: Record<string, any>) => {
-    setSelectedSection(section)
+    setSelectedSection(prev => prev?.objectId === section.objectId ? null : section)
   }
 
   const handleSelectReason = (reason: Record<string, any>, sectionIndex: number) => {
