@@ -3,8 +3,8 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Box, Card, Stack } from '@mui/material';
-import { useState } from 'react';
+import { Box, Card, Stack, TextField } from '@mui/material';
+import { ChangeEvent, useState } from 'react';
 
 const primaryColor = '#262626'
 
@@ -63,14 +63,21 @@ const sx = {
     textAlign: 'center',
     flex: 1
   },
+  weightValueContainer: {
+    height: 46, // important to keep the height of the card
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    padding: 0
+  },
   weightValue: {
     color: primaryColor,
     fontSize: '40px',
     fontStyle: 'normal',
     fontWeight: 500,
     lineHeight: '120%',
-    height: 46, // important to keep the height of the card
-    flex: 1
   },
   weightUnit: {
     color: '#7C7C7C',
@@ -85,6 +92,25 @@ const sx = {
     fontStyle: 'normal',
     fontWeight: 400,
     lineHeight: '157.1%',
+  },
+  weightInput: {
+    flex: 1,
+    padding: 0,
+    '& .MuiOutlinedInput-notchedOutline': {
+      textAlign: 'center',
+      border: 'none'
+    },
+    '& .MuiInputBase-input': {
+      fontSize: '40px',
+      fontStyle: 'normal',
+      fontWeight: 500,
+      lineHeight: '120%',
+      padding: 0,
+      width: 48,
+      textAlign: 'center',
+      display: 'flex',
+      justifyContent: 'center',
+    }
   },
   reasonCard: {
     padding: '0px 16px',
@@ -133,6 +159,10 @@ const SectionsField = ({ options = [], values = [], setFieldValue }: Props) => {
     setFieldValue(`sections[${sectionIndex}].reason`, reason.value)
   }
 
+  const handleChangeWeight = (sectionIndex: number) => (event: ChangeEvent<HTMLInputElement>) => {
+    setFieldValue(`sections[${sectionIndex}].weight`, event.target.value)
+  }
+
   return (
     <Box sx={sx.sections}>
       {options.map((section: Record<string, any>, sectionIndex: number) => (
@@ -170,9 +200,11 @@ const SectionsField = ({ options = [], values = [], setFieldValue }: Props) => {
                       <Typography sx={sx.weightLabel}>
                         Poids initiale
                       </Typography>
-                      <Typography sx={sx.weightValue}>
-                        125
-                      </Typography>
+                      <Box sx={sx.weightValueContainer}>
+                        <Typography sx={sx.weightValue}>
+                          125
+                        </Typography>
+                      </Box>
                       <Typography sx={sx.weightUnit}>
                         kg
                       </Typography>
@@ -182,9 +214,14 @@ const SectionsField = ({ options = [], values = [], setFieldValue }: Props) => {
                       <Typography sx={sx.weightLabel}>
                         Poids de la contre-pesée
                       </Typography>
-                      <Typography sx={sx.weightValue}>
-                        0
-                      </Typography>
+                      <Box sx={sx.weightValueContainer}>
+                        <TextField
+                          type="number"
+                          value={values[sectionIndex]?.weight || 0}
+                          onChange={handleChangeWeight(sectionIndex)}
+                          sx={sx.weightInput}
+                        />
+                      </Box>
                       <Typography sx={sx.weightUnit}>
                         kg
                       </Typography>
