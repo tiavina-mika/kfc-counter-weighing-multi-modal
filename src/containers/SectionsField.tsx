@@ -182,6 +182,7 @@ const SectionsField = ({
           key={section.objectId + sectionIndex}
           expanded={selectedSection?.objectId === section.objectId}
           onChange={() => handleSelectSection(section)}
+          // if error is the global error message
           hasError={!!(errors && typeof errors === 'string')}
         >
           {/* section details */}
