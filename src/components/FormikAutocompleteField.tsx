@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 
 import { Field } from "formik"
 import {
@@ -122,10 +122,10 @@ const FormikAutocompleteField = ({
   }
 
   const handleInputChange = debounce(
-    async (event: React.ChangeEvent<{}>, newValue: string) => {
+    (event: any, newValue: string) => {
       if (newValue && event?.type === "change") {
         setLoading(true)
-        await onSearch(newValue)
+        onSearch(newValue)
         setLoading(false)
       }
     },
