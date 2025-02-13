@@ -2,7 +2,7 @@
   // These tasks will run in order when initializing your CodeSandbox project.
   "setupTasks": [
     {
-      "command": "pnpm install",
+      "command": "npm install",
       "name": "Installing Dependencies"
     }
   ],
@@ -11,22 +11,22 @@
   "tasks": {
     "build": {
       "name": "build",
-      "command": "pnpm build",
+      "command": "npm build",
       "runAtStart": false
     },
     "eject": {
       "name": "eject",
-      "command": "pnpm eject",
+      "command": "npm eject",
       "runAtStart": false
     },
     "start": {
       "name": "start",
-      "command": "pnpm start",
+      "command": "npm start",
       "runAtStart": true
     },
     "test": {
       "name": "test",
-      "command": "pnpm test",
+      "command": "npm test",
       "runAtStart": false
     }
   }
