@@ -9,6 +9,7 @@ import { ChangeEvent, useState } from 'react';
 const primaryColor = '#262626'
 const errorColor = '#F44259'
 const activeColor = '#2196F3'
+const grayColor = '#7C7C7C'
 
 const StyleAccordion = styled(Accordion, {
   shouldForwardProp: (prop) => prop !== "hasError"
@@ -56,8 +57,8 @@ const StyleCard = styled(Card, {
 })
 
 const StyledWeightInput = styled(TextField, {
-  shouldForwardProp: (prop) => prop !== "isPositiveNumber" && prop !== "hasError"
-})(({ isPositiveNumber = false, hasError = false }: { isPositiveNumber: boolean; hasError: boolean }) => {
+  shouldForwardProp: (prop) => prop !== "isPositiveNumber"
+})(({ isPositiveNumber = false }: { isPositiveNumber: boolean }) => {
   const styles: Record<string, any> = {
     flex: 1,
     padding: 0,
@@ -88,6 +89,26 @@ const StyledWeightInput = styled(TextField, {
   return styles
 })
 
+const StyledWeightInputBorderBottom = styled("div", {
+  shouldForwardProp: (prop) => prop !== "isPositiveNumber" && prop !== "hasError"
+})(({ isPositiveNumber = false, hasError = false }: { isPositiveNumber: boolean; hasError: boolean }) => {
+  const styles: Record<string, any> = {
+    height: 2,
+    width: 68,
+    backgroundColor: grayColor
+  }
+
+  if (isPositiveNumber) {
+    styles.backgroundColor = activeColor
+  }
+
+  if (hasError) {
+    styles.backgroundColor = errorColor
+  }
+
+  return styles
+})
+
 const sx = {
   sections: {
     gap: '16px',
@@ -102,7 +123,7 @@ const sx = {
     lineHeight: '140%',
   },
   sectionDescription: {
-    color: '#7C7C7C',
+    color: grayColor,
     fontSize: '16px',
     fontStyle: 'normal',
     fontWeight: 400,
@@ -150,7 +171,7 @@ const sx = {
     lineHeight: '120%',
   },
   weightUnit: {
-    color: '#7C7C7C',
+    color: grayColor,
     fontSize: '16px',
     fontStyle: 'normal',
     fontWeight: 400,
@@ -276,7 +297,10 @@ const SectionsField = ({
                           value={values[sectionIndex]?.weight || 0}
                           onChange={handleChangeWeight(sectionIndex)}
                           isPositiveNumber={values[sectionIndex]?.weight > 0}
+                        />
+                        <StyledWeightInputBorderBottom
                           hasError={!!(errors && (errors[sectionIndex] as any)?.weight)}
+                          isPositiveNumber={values[sectionIndex]?.weight > 0}
                         />
                       </Box>
                       <Typography sx={sx.weightUnit}>
