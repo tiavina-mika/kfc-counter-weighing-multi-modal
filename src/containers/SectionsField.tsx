@@ -267,7 +267,6 @@ const SectionsField = ({
               // individual section error: when weight is defined but reason is not
               || !!(errors && Array.isArray(errors) && errors[sectionIndex]
               && section.objectId === selectedSection?.objectId
-              && (errors[sectionIndex] as any).weight && !(errors[sectionIndex] as any).reason
             )}
           >
             {/* section details */}
@@ -348,8 +347,7 @@ const SectionsField = ({
                             isSelected={isSelectedReason}
                             hasError={
                               // individual section error: when weight is defined but reason is not
-                              (!!(errors && (errors[sectionIndex] as any)?.reason)
-                              && (errors[sectionIndex] as any).weight && !(errors[sectionIndex] as any).reason)
+                              !!errors && (errors[sectionIndex] as any)?.reason
                               // global error: for all sections
                               || !!hasGlobalError
                             }
