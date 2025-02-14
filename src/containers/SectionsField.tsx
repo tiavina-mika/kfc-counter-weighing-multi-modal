@@ -259,7 +259,9 @@ const SectionsField = ({
           expanded={selectedSections.some(s => s.objectId === section.objectId)}
           onChange={() => handleSelectSection(section)}
           // if error is the global error message or any individual error
-          hasError={!!(errors && typeof errors === 'string') || !!errors}
+          hasError={
+            !!(errors && typeof errors === 'string')
+            || !!(errors && Array.isArray(errors) && errors[sectionIndex] && section.objectId === selectedSection?.objectId)}
         >
           {/* section details */}
           <AccordionSummary
