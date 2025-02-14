@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box, Card, Stack, styled, TextField } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
+import { FormikErrors } from 'formik';
 
 const primaryColor = '#262626'
 const errorColor = '#F44259'
@@ -224,7 +225,7 @@ type Props = {
   options: Record<string, any>[]
   values: Record<string, any>[]
   setFieldValue: (field: string, value: any) => void
-  errors?: Record<string, any>[] | string | undefined | string[]
+  errors?: Record<string, any>[] | string | undefined | string[] | FormikErrors<any> | FormikErrors<any>[]
 }
 
 const SectionsField = ({
@@ -321,7 +322,7 @@ const SectionsField = ({
                           <StyledWeightInputBorderBottom
                             hasError={
                               // individual section error: when weight is not defined
-                              !!(errors && (errors[sectionIndex] as any)?.weight)
+                              !!(errors && (errors as any)[sectionIndex]?.weight)
                               // global error: for all sections
                               || !!hasGlobalError
                             }
@@ -347,7 +348,7 @@ const SectionsField = ({
                             isSelected={isSelectedReason}
                             hasError={
                               // individual section error: when weight is defined but reason is not
-                              !!errors && (errors[sectionIndex] as any)?.reason
+                              !!errors && (errors as any)[sectionIndex]?.reason
                               // global error: for all sections
                               || !!hasGlobalError
                             }
@@ -361,9 +362,9 @@ const SectionsField = ({
                       })}
                     </Stack>
                     {/* reason error message */}
-                    {errors && (errors[sectionIndex] as any)?.reason && (
+                    {errors && (errors as any)[sectionIndex]?.reason && (
                       <Typography color="error" variant="caption">
-                        {(errors[sectionIndex] as any)?.reason}
+                        {(errors as any)[sectionIndex]?.reason}
                       </Typography>
                     )}
                   </Stack>
