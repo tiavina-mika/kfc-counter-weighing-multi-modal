@@ -3,7 +3,7 @@ import { packagingExecutions } from '../utils/data';
 
 const Recipes = () => {
   return (
-    <Paper sx={{ width: '100%', mt: 4 }}>
+    <Paper sx={{ width: '100%', mt: 4, maxWidth: 600 }}>
       <Typography variant="h6" component="h2" sx={{ p: 2 }}>
         Liste des recettes à rechercher pour la contre-pesée
       </Typography>
