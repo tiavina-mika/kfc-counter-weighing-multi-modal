@@ -11,8 +11,8 @@ const App = () => {
 
   const toggleOpenRecipeDialog = () => setIsOpenRecipeDialog(!isOpenRecipeDialog)
 
-  const handleSelectRecipe = (recipe: Record<string, any>) => {
-    setSelectedRecipe(recipe)
+  const handleSelectRecipe = (values: Record<string, any>) => {
+    setSelectedRecipe(values.recipe)
     toggleOpenRecipeDialog()
   }
 
