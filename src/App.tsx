@@ -2,8 +2,9 @@ import { useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import RecipeDialogForm from './containers/RecipeDialogForm';
-import { AppBar, Box, CssBaseline, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, CssBaseline, Table, TableBody, TableCell, TableHead, TableRow, Toolbar, Typography } from '@mui/material';
 import SectionsSelectionDialogForm from './containers/SectionsSelectionDialogForm';
+import { packagingExecutions } from './utils/data';
 
 const App = () => {
   const [isOpenRecipeDialog, setIsOpenRecipeDialog] = useState(false)
@@ -39,8 +40,23 @@ const App = () => {
         Ouvrir la série des modales de contre-pesée
       </Typography>
       {/* content */}
-      <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px' }}>
         <Button onClick={toggleOpenRecipeDialog} variant="contained">Faire une contre-pesée/reprod</Button>
+        {/* table with list of recipe */}
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Nom de la recette</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {packagingExecutions.map((packagingExecution, index) => (
+              <TableRow key={packagingExecution.recipe.objectId + index}>
+                <TableCell>{packagingExecution.recipe.name}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </Box>
       {/* modals */}
       <RecipeDialogForm
