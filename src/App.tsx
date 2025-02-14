@@ -45,11 +45,13 @@ const App = () => {
         <Recipes />
       </Box>
       {/* modals */}
+      {/* 1. recipe modal */}
       <RecipeDialogForm
         onClose={toggleOpenRecipeDialog}
         open={isOpenRecipeDialog}
         onSubmit={handleSelectRecipe}
       />
+      {/* 2. sections modal */}
       <SectionsSelectionDialogForm
         recipe={selectedRecipe}
         open={!!selectedRecipe}
