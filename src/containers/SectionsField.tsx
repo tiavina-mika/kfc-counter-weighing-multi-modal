@@ -315,7 +315,12 @@ const SectionsField = ({
                           isPositiveNumber={values[sectionIndex]?.weight > 0}
                         />
                         <StyledWeightInputBorderBottom
-                          hasError={!!(errors && (errors[sectionIndex] as any)?.weight)}
+                          hasError={
+                            // individual section error: when weight is not defined
+                            !!(errors && (errors[sectionIndex] as any)?.weight)
+                            // global error: for all sections
+                            || !!(errors && typeof errors === 'string')
+                          }
                           isPositiveNumber={values[sectionIndex]?.weight > 0}
                         />
                       </Box>
@@ -336,7 +341,12 @@ const SectionsField = ({
                           key={reason.value + reasonIndex}
                           onClick={() => handleSelectReason(reason, sectionIndex)}
                           isSelected={isSelectedReason}
-                          hasError={!!(errors && (errors[sectionIndex] as any)?.reason)}
+                          hasError={
+                            // individual section error: when weight is defined but reason is not
+                            !!(errors && (errors[sectionIndex] as any)?.reason)
+                            // global error: for all sections
+                            || !!(errors && typeof errors === 'string')
+                          }
                         >
                           <img alt={reason.label} src={`/icons/${reason.icon}${isSelectedReason ? '-active' : ''}.svg`} />
                           <Typography sx={sx.reasonLabel}>
