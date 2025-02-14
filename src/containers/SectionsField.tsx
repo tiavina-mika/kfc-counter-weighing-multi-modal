@@ -250,124 +250,132 @@ const SectionsField = ({
     setFieldValue(`sections[${sectionIndex}].weight`, +event.target.value)
   }
 
+  const hasGlobalError = errors && typeof errors === 'string'
+
   return (
     <Box sx={sx.sections}>
-      {options.map((section: Record<string, any>, sectionIndex: number) => (
-        <StyleAccordion
-          key={section.objectId + sectionIndex}
-          // expanded={selectedSection?.objectId === section.objectId}
-          expanded={selectedSections.some(s => s.objectId === section.objectId)}
-          onChange={() => handleSelectSection(section)}
-          // if error is the global error message or any individual error
-          hasError={
-            // global error: for all sections
-            !!(errors && typeof errors === 'string')
-            // individual section error: when weight is defined but reason is not
-            || !!(errors && Array.isArray(errors) && errors[sectionIndex] && section.objectId === selectedSection?.objectId)}
-        >
-          {/* section details */}
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1-content"
-            id="panel1-header"
+      {options.map((section: Record<string, any>, sectionIndex: number) => {
+        return (
+          <StyleAccordion
+            key={section.objectId + sectionIndex}
+            // expanded={selectedSection?.objectId === section.objectId}
+            expanded={selectedSections.some(s => s.objectId === section.objectId)}
+            onChange={() => handleSelectSection(section)}
+            // if error is the global error message or any individual error
+            hasError={
+              // global error: for all sections
+              !!hasGlobalError
+              // individual section error: when weight is defined but reason is not
+              || !!(errors && Array.isArray(errors) && errors[sectionIndex]
+              && section.objectId === selectedSection?.objectId
+              && (errors[sectionIndex] as any).weight && !(errors[sectionIndex] as any).reason
+            )}
           >
-            <Typography component="span" sx={sx.sectionName}>
-              {section.name}
-            </Typography>
-          </AccordionSummary>
-          {/* section form */}
-          <AccordionDetails>
-            <Stack>
-              {/* main label */}
-              <Typography sx={sx.sectionDescription}>
-                Pesez l'ensemble de la section restante puis saisissez son poids et le motif de cette contre-pesée.
+            {/* section details */}
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1-content"
+              id="panel1-header"
+            >
+              <Typography component="span" sx={sx.sectionName}>
+                {section.name}
               </Typography>
-
-              {/* fields */}
-              <Stack alignItems="center">
-                {/* ------- top: weight ------- */}
-                <Box sx={sx.weightContainer}>
-                  <Stack direction="row" sx={{ gap: "96px" }}>
-                    {/* label */}
-                    <Box sx={sx.weightColumn}>
-                      <Typography sx={sx.weightLabel}>
-                        Poids initiale
-                      </Typography>
-                      <Box sx={sx.weightValueContainer}>
-                        <Typography sx={sx.weightValue}>
-                          125
+            </AccordionSummary>
+            {/* section form */}
+            <AccordionDetails>
+              <Stack>
+                {/* main label */}
+                <Typography sx={sx.sectionDescription}>
+                  Pesez l'ensemble de la section restante puis saisissez son poids et le motif de cette contre-pesée.
+                </Typography>
+  
+                {/* fields */}
+                <Stack alignItems="center">
+                  {/* ------- top: weight ------- */}
+                  <Box sx={sx.weightContainer}>
+                    <Stack direction="row" sx={{ gap: "96px" }}>
+                      {/* label */}
+                      <Box sx={sx.weightColumn}>
+                        <Typography sx={sx.weightLabel}>
+                          Poids initiale
+                        </Typography>
+                        <Box sx={sx.weightValueContainer}>
+                          <Typography sx={sx.weightValue}>
+                            125
+                          </Typography>
+                        </Box>
+                        <Typography sx={sx.weightUnit}>
+                          kg
                         </Typography>
                       </Box>
-                      <Typography sx={sx.weightUnit}>
-                        kg
-                      </Typography>
-                    </Box>
-                    {/* value */}
-                    <Box sx={sx.weightColumn}>
-                      <Typography sx={sx.weightLabel}>
-                        Poids de la contre-pesée
-                      </Typography>
-                      <Box sx={sx.weightValueContainer}>
-                        <StyledWeightInput
-                          type="number"
-                          value={values[sectionIndex]?.weight || 0}
-                          onChange={handleChangeWeight(sectionIndex)}
-                          isPositiveNumber={values[sectionIndex]?.weight > 0}
-                        />
-                        <StyledWeightInputBorderBottom
-                          hasError={
-                            // individual section error: when weight is not defined
-                            !!(errors && (errors[sectionIndex] as any)?.weight)
-                            // global error: for all sections
-                            || !!(errors && typeof errors === 'string')
-                          }
-                          isPositiveNumber={values[sectionIndex]?.weight > 0}
-                        />
+                      {/* value */}
+                      <Box sx={sx.weightColumn}>
+                        <Typography sx={sx.weightLabel}>
+                          Poids de la contre-pesée
+                        </Typography>
+                        <Box sx={sx.weightValueContainer}>
+                          <StyledWeightInput
+                            type="number"
+                            value={values[sectionIndex]?.weight || 0}
+                            onChange={handleChangeWeight(sectionIndex)}
+                            isPositiveNumber={values[sectionIndex]?.weight > 0}
+                          />
+                          <StyledWeightInputBorderBottom
+                            hasError={
+                              // individual section error: when weight is not defined
+                              !!(errors && (errors[sectionIndex] as any)?.weight)
+                              // global error: for all sections
+                              || !!hasGlobalError
+                            }
+                            isPositiveNumber={values[sectionIndex]?.weight > 0}
+                          />
+                        </Box>
+                        <Typography sx={sx.weightUnit}>
+                          kg
+                        </Typography>
                       </Box>
-                      <Typography sx={sx.weightUnit}>
-                        kg
+                    </Stack>
+                  </Box>
+                  {/* -------- bottom: reason -------- */}
+                  <Stack spacing={16 / 6} sx={{ alignSelf: "stretch" }}>
+                    {/* list of reasons */}
+                    <Stack direction="row" sx={{ gap: "16px", alignSelf: "stretch" }}>
+                      {reasons.map((reason: Record<string, any>, reasonIndex: number) => {
+                        const isSelectedReason = values[sectionIndex]?.reason === reason.value
+                        return (
+                          <StyleCard
+                            key={reason.value + reasonIndex}
+                            onClick={() => handleSelectReason(reason, sectionIndex)}
+                            isSelected={isSelectedReason}
+                            hasError={
+                              // individual section error: when weight is defined but reason is not
+                              (!!(errors && (errors[sectionIndex] as any)?.reason)
+                              && (errors[sectionIndex] as any).weight && !(errors[sectionIndex] as any).reason)
+                              // global error: for all sections
+                              || !!hasGlobalError
+                            }
+                          >
+                            <img alt={reason.label} src={`/icons/${reason.icon}${isSelectedReason ? '-active' : ''}.svg`} />
+                            <Typography sx={sx.reasonLabel}>
+                              {reason.label}
+                            </Typography>
+                          </StyleCard>
+                        )
+                      })}
+                    </Stack>
+                    {/* reason error message */}
+                    {errors && (errors[sectionIndex] as any)?.reason && (
+                      <Typography color="error" variant="caption">
+                        {(errors[sectionIndex] as any)?.reason}
                       </Typography>
-                    </Box>
+                    )}
                   </Stack>
-                </Box>
-                {/* -------- bottom: reason -------- */}
-                <Stack spacing={16 / 6} sx={{ alignSelf: "stretch" }}>
-                  {/* list of reasons */}
-                  <Stack direction="row" sx={{ gap: "16px", alignSelf: "stretch" }}>
-                    {reasons.map((reason: Record<string, any>, reasonIndex: number) => {
-                      const isSelectedReason = values[sectionIndex]?.reason === reason.value
-                      return (
-                        <StyleCard
-                          key={reason.value + reasonIndex}
-                          onClick={() => handleSelectReason(reason, sectionIndex)}
-                          isSelected={isSelectedReason}
-                          hasError={
-                            // individual section error: when weight is defined but reason is not
-                            !!(errors && (errors[sectionIndex] as any)?.reason)
-                            // global error: for all sections
-                            || !!(errors && typeof errors === 'string')
-                          }
-                        >
-                          <img alt={reason.label} src={`/icons/${reason.icon}${isSelectedReason ? '-active' : ''}.svg`} />
-                          <Typography sx={sx.reasonLabel}>
-                            {reason.label}
-                          </Typography>
-                        </StyleCard>
-                      )
-                    })}
-                  </Stack>
-                  {/* reason error message */}
-                  {errors && (errors[sectionIndex] as any)?.reason && (
-                    <Typography color="error" variant="caption">
-                      {(errors[sectionIndex] as any)?.reason}
-                    </Typography>
-                  )}
                 </Stack>
               </Stack>
-            </Stack>
-          </AccordionDetails>
-        </StyleAccordion>
-      ))}
+            </AccordionDetails>
+          </StyleAccordion>
+        )
+      })}
     </Box>
   )
 }
