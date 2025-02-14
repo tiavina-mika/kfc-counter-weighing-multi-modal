@@ -39,7 +39,7 @@ const App = () => {
         Ouvrir la série des modales de contre-pesée
       </Typography>
       {/* content */}
-      <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '16px' }}>
+      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: "column",  alignItems: 'center', gap: '16px', p: 6, mt: 1 }}>
         <Button onClick={toggleOpenRecipeDialog} variant="contained">Faire une contre-pesée/reprod</Button>
         {/* table with list of recipe */}
         <Recipes />
