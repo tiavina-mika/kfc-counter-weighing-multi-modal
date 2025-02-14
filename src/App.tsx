@@ -4,10 +4,12 @@ import RecipeDialogForm from './containers/RecipeDialogForm';
 import { AppBar, Box, CssBaseline, Toolbar, Typography } from '@mui/material';
 import SectionsSelectionDialogForm from './containers/SectionsSelectionDialogForm';
 import Recipes from './containers/Recipes';
+import { packagingExecutions } from './utils/data';
 
 const App = () => {
   const [isOpenRecipeDialog, setIsOpenRecipeDialog] = useState(false)
-  const [selectedRecipe, setSelectedRecipe] = useState<Record<string, any> | null>(null)
+  // const [selectedRecipe, setSelectedRecipe] = useState<Record<string, any> | null>(null)
+  const [selectedRecipe, setSelectedRecipe] = useState<Record<string, any> | null>(packagingExecutions[0].recipe)
 
   const toggleOpenRecipeDialog = () => setIsOpenRecipeDialog(!isOpenRecipeDialog)
 
