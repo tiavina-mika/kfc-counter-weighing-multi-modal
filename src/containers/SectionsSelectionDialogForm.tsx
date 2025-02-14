@@ -70,6 +70,7 @@ const SectionsSelectionDialogForm = ({
     onSubmit,
     recipe,
 }: Props) => {
+    console.log('recipe: ', recipe);
     const formikRef = useRef(null)
     const descriptionElementRef = useRef<HTMLElement>(null);
     useEffect(() => {
@@ -113,7 +114,7 @@ const SectionsSelectionDialogForm = ({
                 <Box ref={descriptionElementRef} tabIndex={-1}>
                     <Formik
                         innerRef={formikRef}
-                        initialValues={{ sections: [] }}
+                        initialValues={{ sections: recipe?.sections || [] }}
                         // initialValues={{ sections: recipe?.sections.map((section: Record<string, any>) => ({ ...section, reason: 'broken', weight: 10 })) }}
                         validationSchema={schema}
                         onSubmit={_handleSubmit}
