@@ -235,7 +235,6 @@ const SectionsField = ({
 }: Props) => {
   const [selectedSection, setSelectedSection] = useState<Record<string, any> | null>(null)
   const [selectedSections, setSelectedSections] = useState<Record<string, any>[]>([])
-  console.log('errors: ', errors);
 
   const handleSelectSection = (section: Record<string, any>) => {
     setSelectedSection(prev => prev?.objectId === section.objectId ? null : section)
