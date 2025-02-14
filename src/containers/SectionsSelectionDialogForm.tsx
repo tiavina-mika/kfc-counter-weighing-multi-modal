@@ -81,7 +81,6 @@ const SectionsSelectionDialogForm = ({
       }
     }, [open]);
 
-
     const handleConfirm = () => {
         (formikRef.current as any)?.submitForm()
     }
