@@ -260,7 +260,9 @@ const SectionsField = ({
           onChange={() => handleSelectSection(section)}
           // if error is the global error message or any individual error
           hasError={
+            // global error: for all sections
             !!(errors && typeof errors === 'string')
+            // individual section error: when weight is defined but reason is not
             || !!(errors && Array.isArray(errors) && errors[sectionIndex] && section.objectId === selectedSection?.objectId)}
         >
           {/* section details */}
