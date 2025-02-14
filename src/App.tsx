@@ -41,19 +41,18 @@ const App = () => {
       {/* content */}
       <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Button onClick={toggleOpenRecipeDialog} variant="contained">Faire une contre-pesée/reprod</Button>
-
-        <RecipeDialogForm
-          onClose={toggleOpenRecipeDialog}
-          open={isOpenRecipeDialog}
-          onSubmit={handleSelectRecipe}
-        />
-        <SectionsSelectionDialogForm
-          recipe={selectedRecipe}
-          open={!!selectedRecipe}
-          onClose={() => setSelectedRecipe(null)}
-          onSubmit={handleSubmitSections}
-        />
       </Box>
+      <RecipeDialogForm
+        onClose={toggleOpenRecipeDialog}
+        open={isOpenRecipeDialog}
+        onSubmit={handleSelectRecipe}
+      />
+      <SectionsSelectionDialogForm
+        recipe={selectedRecipe}
+        open={!!selectedRecipe}
+        onClose={() => setSelectedRecipe(null)}
+        onSubmit={handleSubmitSections}
+      />
     </Box>
   );
 }
