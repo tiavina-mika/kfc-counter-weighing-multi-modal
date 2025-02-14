@@ -42,6 +42,7 @@ const App = () => {
       <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Button onClick={toggleOpenRecipeDialog} variant="contained">Faire une contre-pesée/reprod</Button>
       </Box>
+      {/* modals */}
       <RecipeDialogForm
         onClose={toggleOpenRecipeDialog}
         open={isOpenRecipeDialog}
