@@ -2,14 +2,12 @@ import { useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import RecipeDialogForm from './containers/RecipeDialogForm';
-import { Box } from '@mui/material';
+import { AppBar, Box, CssBaseline, Toolbar, Typography } from '@mui/material';
 import SectionsSelectionDialogForm from './containers/SectionsSelectionDialogForm';
-import { packagingExecutions } from './utils/data';
 
 const App = () => {
   const [isOpenRecipeDialog, setIsOpenRecipeDialog] = useState(false)
-  const [selectedRecipe, setSelectedRecipe] = useState<Record<string, any> | null>(packagingExecutions[0].recipe)
-  // const [selectedRecipe, setSelectedRecipe] = useState<Record<string, any> | null>(null)
+  const [selectedRecipe, setSelectedRecipe] = useState<Record<string, any> | null>(null)
 
   const toggleOpenRecipeDialog = () => setIsOpenRecipeDialog(!isOpenRecipeDialog)
 
@@ -23,9 +21,23 @@ const App = () => {
   }
 
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <Stack spacing={2}>
-        <Button onClick={toggleOpenRecipeDialog} variant="contained">Faire une contre-pesée/reprodx</Button>
+    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: "column", flexGrow: 1 }}>
+      <CssBaseline />
+      <AppBar position="static" component="nav">
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Box sx={{ width: '140px' }}>
+            <img alt="foodcheri" src="/logo.svg" />
+          </Box>
+          <Typography
+            variant="h6"
+            sx={{ flexGrow: 1, ml: 4 }}
+          >
+            Ouvrir la série des modales de contre-pesée
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Button onClick={toggleOpenRecipeDialog} variant="contained">Faire une contre-pesée/reprod</Button>
 
         <RecipeDialogForm
           onClose={toggleOpenRecipeDialog}
@@ -38,7 +50,7 @@ const App = () => {
           onClose={() => setSelectedRecipe(null)}
           onSubmit={handleSubmitSections}
         />
-      </Stack>
+      </Box>
     </Box>
   );
 }
