@@ -234,10 +234,12 @@ const SectionsField = ({
   setFieldValue
 }: Props) => {
   const [selectedSection, setSelectedSection] = useState<Record<string, any> | null>(null)
+  const [selectedSections, setSelectedSections] = useState<Record<string, any>[]>([])
   console.log('errors: ', errors);
 
   const handleSelectSection = (section: Record<string, any>) => {
     setSelectedSection(prev => prev?.objectId === section.objectId ? null : section)
+    setSelectedSections(prev => prev.includes(section) ? prev.filter((s: Record<string, any>) => s.objectId !== section.objectId) : [...prev, section])
   }
 
   const handleSelectReason = (reason: Record<string, any>, sectionIndex: number) => {
@@ -253,7 +255,8 @@ const SectionsField = ({
       {options.map((section: Record<string, any>, sectionIndex: number) => (
         <StyleAccordion
           key={section.objectId + sectionIndex}
-          expanded={selectedSection?.objectId === section.objectId}
+          // expanded={selectedSection?.objectId === section.objectId}
+          expanded={selectedSections.some(s => s.objectId === section.objectId)}
           onChange={() => handleSelectSection(section)}
           // if error is the global error message or any individual error
           hasError={!!(errors && typeof errors === 'string') || !!errors}
@@ -331,7 +334,7 @@ const SectionsField = ({
                           isSelected={isSelectedReason}
                           hasError={!!(errors && (errors[sectionIndex] as any)?.reason)}
                         >
-                          <img alt={reason.label} src={`/icons/${reason.icon}.svg`} />
+                          <img alt={reason.label} src={`/icons/${reason.icon}${isSelectedReason ? '-active' : ''}.svg`} />
                           <Typography sx={sx.reasonLabel}>
                             {reason.label}
                           </Typography>
