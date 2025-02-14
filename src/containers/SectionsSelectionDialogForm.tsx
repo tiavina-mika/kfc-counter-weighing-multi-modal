@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { Form, Formik } from "formik"
 import {
     Button,
@@ -71,6 +71,16 @@ const SectionsSelectionDialogForm = ({
     recipe,
 }: Props) => {
     const formikRef = useRef(null)
+    const descriptionElementRef = useRef<HTMLElement>(null);
+    useEffect(() => {
+      if (open) {
+        const { current: descriptionElement } = descriptionElementRef;
+        if (descriptionElement !== null) {
+          descriptionElement.focus();
+        }
+      }
+    }, [open]);
+
 
     const handleConfirm = () => {
         (formikRef.current as any)?.submitForm()
@@ -88,7 +98,7 @@ const SectionsSelectionDialogForm = ({
     }
 
     return (
-        <Dialog open={open} onClose={onClose} sx={sx.dialog}>
+        <Dialog open={open} onClose={onClose} scroll="body" sx={sx.dialog}>
             <DialogTitle sx={{ p: 0 }}>
                 {recipe?.uniqueCode} - {recipe?.name}
             </DialogTitle>
@@ -103,11 +113,11 @@ const SectionsSelectionDialogForm = ({
                 <DialogContentText>
                     Choisissez la section sur laquelle vous devez faire une contre-pesée.
                 </DialogContentText>
-                <Box>
+                <Box ref={descriptionElementRef} tabIndex={-1}>
                     <Formik
                         innerRef={formikRef}
-                        // initialValues={{ sections: [] }}
-                        initialValues={{ sections: recipe?.sections.map((section: Record<string, any>) => ({ ...section, reason: 'broken', weight: 10 })) }}
+                        initialValues={{ sections: [] }}
+                        // initialValues={{ sections: recipe?.sections.map((section: Record<string, any>) => ({ ...section, reason: 'broken', weight: 10 })) }}
                         validationSchema={schema}
                         onSubmit={_handleSubmit}
                     >
