@@ -9,12 +9,12 @@ import { packagingExecutions } from './utils/data';
 const App = () => {
   const [isOpenRecipeDialog, setIsOpenRecipeDialog] = useState(false)
   // const [selectedRecipe, setSelectedRecipe] = useState<Record<string, any> | null>(null)
-  const [selectedRecipe, setSelectedRecipe] = useState<Record<string, any> | null>(packagingExecutions[0].recipe)
+  const [selectedPackagingExecution, setSelectedPackagingExecution] = useState<Record<string, any> | null>(packagingExecutions[0])
 
   const toggleOpenRecipeDialog = () => setIsOpenRecipeDialog(!isOpenRecipeDialog)
 
   const handleSelectRecipe = (values: Record<string, any>) => {
-    setSelectedRecipe(values.recipe)
+    setSelectedPackagingExecution(values.recipe)
     toggleOpenRecipeDialog()
   }
 
@@ -55,9 +55,9 @@ const App = () => {
       />
       {/* 2. sections modal */}
       <SectionsSelectionDialogForm
-        recipe={selectedRecipe}
-        open={!!selectedRecipe}
-        onClose={() => setSelectedRecipe(null)}
+        packagingExecution={selectedPackagingExecution}
+        open={!!selectedPackagingExecution}
+        onClose={() => setSelectedPackagingExecution(null)}
         onSubmit={handleSubmitSections}
       />
     </Box>
