@@ -104,25 +104,6 @@ const StyledWeightInputBorderBottom = styled("div", {
 })
 
 const sx = {
-  sections: {
-    gap: '16px',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  sectionName: {
-    color: primaryColor,
-    fontSize: '20px',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: '140%',
-  },
-  sectionDescription: {
-    color: grayColor,
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: 400,
-    lineHeight: '150%',
-  },
   weightContainer: {
     display: 'flex',
     flexDirection: 'column',
