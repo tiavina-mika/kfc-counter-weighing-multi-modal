@@ -3,7 +3,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Box, Card, Stack, styled, TextField } from '@mui/material';
+import { Box, Button, Card, Stack, styled, TextField } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 import { FormikErrors } from 'formik';
 
@@ -234,21 +234,23 @@ const SectionsField = ({
   errors,
   setFieldValue
 }: Props) => {
-  const [selectedSection, setSelectedSection] = useState<Record<string, any> | null>(null)
   const [selectedSections, setSelectedSections] = useState<Record<string, any>[]>([])
 
   const handleSelectSection = (section: Record<string, any>) => {
-    setSelectedSection(prev => prev?.objectId === section.objectId ? null : section)
     setSelectedSections(prev => prev.includes(section) ? prev.filter((s: Record<string, any>) => s.objectId !== section.objectId) : [...prev, section])
   }
 
   const handleSelectReason = (reason: Record<string, any>, sectionIndex: number) => {
-    setFieldValue(`sections[${sectionIndex}].reason`, reason.value)
+    setFieldValue(`sections[${sectionIndex}].counterWeighing.reason`, reason.value)
   }
 
   const handleChangeWeight = (sectionIndex: number) => (event: ChangeEvent<HTMLInputElement>) => {
-    setFieldValue(`sections[${sectionIndex}].weight`, +event.target.value)
+    setFieldValue(`sections[${sectionIndex}].counterWeighing.weight`, +event.target.value)
   }
+
+  // const handleResetSection = () => {
+  //   const prevSection = { ...selectedSection }
+  //   delete prevSection.counterWeighing
 
   const hasGlobalError = errors && typeof errors === 'string'
 
@@ -267,7 +269,7 @@ const SectionsField = ({
               !!hasGlobalError
               // individual section error: when weight is defined but reason is not
               || !!(errors && Array.isArray(errors) && errors[sectionIndex]
-              && section.objectId === selectedSection?.objectId
+              && selectedSections.some(s => s.objectId === section.objectId)
             )}
           >
             {/* section details */}
@@ -289,7 +291,7 @@ const SectionsField = ({
                 </Typography>
   
                 {/* fields */}
-                <Stack alignItems="center">
+                <Stack alignItems="center" spacing={16}>
                   {/* ------- top: weight ------- */}
                   <Box sx={sx.weightContainer}>
                     <Stack direction="row" sx={{ gap: "96px" }}>
@@ -315,18 +317,18 @@ const SectionsField = ({
                         <Box sx={sx.weightValueContainer}>
                           <StyledWeightInput
                             type="number"
-                            value={values[sectionIndex]?.weight || 0}
+                            value={values[sectionIndex]?.counterWeighing?.weight || 0}
                             onChange={handleChangeWeight(sectionIndex)}
-                            isPositiveNumber={values[sectionIndex]?.weight > 0}
+                            isPositiveNumber={values[sectionIndex]?.counterWeighing?.weight > 0}
                           />
                           <StyledWeightInputBorderBottom
                             hasError={
                               // individual section error: when weight is not defined
-                              !!(errors && (errors as any)[sectionIndex]?.weight)
+                              !!(errors && (errors as any)[sectionIndex]?.counterWeighing?.weight)
                               // global error: for all sections
                               || !!hasGlobalError
                             }
-                            isPositiveNumber={values[sectionIndex]?.weight > 0}
+                            isPositiveNumber={values[sectionIndex]?.counterWeighing?.weight > 0}
                           />
                         </Box>
                         <Typography sx={sx.weightUnit}>
@@ -340,7 +342,7 @@ const SectionsField = ({
                     {/* list of reasons */}
                     <Stack direction="row" sx={{ gap: "16px", alignSelf: "stretch" }}>
                       {reasons.map((reason: Record<string, any>, reasonIndex: number) => {
-                        const isSelectedReason = values[sectionIndex]?.reason === reason.value
+                        const isSelectedReason = values[sectionIndex]?.counterWeighing?.reason === reason.value
                         return (
                           <StyleCard
                             key={reason.value + reasonIndex}
@@ -348,7 +350,7 @@ const SectionsField = ({
                             isSelected={isSelectedReason}
                             hasError={
                               // individual section error: when weight is defined but reason is not
-                              !!errors && (errors as any)[sectionIndex]?.reason
+                              !!errors && (errors as any)[sectionIndex]?.counterWeighing?.reason
                               // global error: for all sections
                               || !!hasGlobalError
                             }
@@ -361,6 +363,11 @@ const SectionsField = ({
                         )
                       })}
                     </Stack>
+                    <div>
+                      <Button variant="outlined" color="primary">
+                        Faire une nouvelle contre-pesée
+                      </Button>
+                    </div>
                     {/* reason error message */}
                     {errors && (errors as any)[sectionIndex]?.reason && (
                       <Typography color="error" variant="caption">
