@@ -32,3 +32,6 @@ Si la contre-pesée pour une section a été remplie mais qu'aucun motif n'a ét
 S'il y a déjà eu une contre-pesée sur la section, afficher par défaut dans l'input la précédente contre-pesée.
 Et donner la possibilité d'en saisir une nouvelle
 Figma
+
+# NOTE
+This is not primarily a TypeScript project; it's just a UI display
