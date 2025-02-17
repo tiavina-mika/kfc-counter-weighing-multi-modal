@@ -1,4 +1,4 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from '@mui/material';
 import { packagingExecutions } from '../utils/data';
 
 const Recipes = () => {
@@ -9,11 +9,6 @@ const Recipes = () => {
       </Typography>
       <TableContainer>
         <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Nom de la recette</TableCell>
-            </TableRow>
-          </TableHead>
           <TableBody>
             {packagingExecutions.map((packagingExecution: Record<string, any>, index: number) => (
               <TableRow key={packagingExecution.recipe.objectId + index}>
@@ -23,7 +18,6 @@ const Recipes = () => {
           </TableBody>
         </Table>       
       </TableContainer>
-
     </Paper>
   );
 }
