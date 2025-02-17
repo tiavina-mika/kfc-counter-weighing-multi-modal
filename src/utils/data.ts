@@ -12,8 +12,6 @@ export const packagingExecutions = [
         {
           objectId: 'section12',
           name: 'Section 12',
-          weight: 10,
-          reason: 'broken'
         }
       ]
     },
@@ -25,8 +23,10 @@ export const packagingExecutions = [
       {
         objectId: 'section12',
         name: 'Section 12',
-        weight: 10,
-        reason: 'broken'
+        counterWeighing: {
+          weight: 13,
+          reason: 'broken'
+        }
       }
     ]
   },
