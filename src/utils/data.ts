@@ -16,7 +16,19 @@ export const packagingExecutions = [
           reason: 'broken'
         }
       ]
-    }
+    },
+    sections: [
+      {
+        objectId: 'section11',
+        name: 'Section 11',
+      },
+      {
+        objectId: 'section12',
+        name: 'Section 12',
+        weight: 10,
+        reason: 'broken'
+      }
+    ]
   },
   {
     recipe: {
@@ -33,7 +45,17 @@ export const packagingExecutions = [
           name: 'Section 22',
         }
       ]
-    }
+    },
+    sections: [
+      {
+        objectId: 'section21',
+        name: 'Section 21',
+      },
+      {
+        objectId: 'section22',
+        name: 'Section 22',
+      }
+    ]
   },
   {
     recipe: {
@@ -50,7 +72,17 @@ export const packagingExecutions = [
           name: 'Section 32',
         }
       ]
-    }
+    },
+    sections: [
+      {
+        objectId: 'section31',
+        name: 'Section 31',
+      },
+      {
+        objectId: 'section32',
+        name: 'Section 32',
+      }
+    ]
   },
   {
     recipe: {
@@ -67,7 +99,17 @@ export const packagingExecutions = [
           name: 'Section 42',
         }
       ]
-    }
+    },
+    sections: [
+      {
+        objectId: 'section41',
+        name: 'Section 41',
+      },
+      {
+        objectId: 'section42',
+        name: 'Section 42',
+      }
+    ]
   },
   {
     recipe: {
@@ -84,7 +126,17 @@ export const packagingExecutions = [
           name: 'Section 52',
         }
       ]
-    }
+    },
+    sections: [
+      {
+        objectId: 'section51',
+        name: 'Section 51',
+      },
+      {
+        objectId: 'section52',
+        name: 'Section 52',
+      }
+    ]
   },
   {
     recipe: {
@@ -101,7 +153,17 @@ export const packagingExecutions = [
           name: 'Section 62',
         }
       ]
-    }
+    },
+    sections: [
+      {
+        objectId: 'section61',
+        name: 'Section 61',
+      },
+      {
+        objectId: 'section62',
+        name: 'Section 62',
+      }
+    ]
   },
   {
     recipe: {
@@ -118,7 +180,17 @@ export const packagingExecutions = [
           name: 'Section 72',
         }
       ]
-    }
+    },
+    sections: [
+      {
+        objectId: 'section71',
+        name: 'Section 71',
+      },
+      {
+        objectId: 'section72',
+        name: 'Section 72',
+      }
+    ]
   },
   {
     recipe: {
@@ -135,6 +207,16 @@ export const packagingExecutions = [
           name: 'Section 82',
         }
       ]
-    }
+    },
+    sections: [
+      {
+        objectId: 'section81',
+        name: 'Section 81',
+      },
+      {
+        objectId: 'section82',
+        name: 'Section 82',
+      }
+    ]
   },
 ]
