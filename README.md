@@ -1,50 +1,34 @@
-# React + TypeScript + Vite
+## Description
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Contexte :
+Nous souhaitons donner à l'atelier de barquettage/conditionnement, la possibilité de peser de nouveau une ou plusieurs sections     
 
-Currently, two official plugins are available:
+### Solution :
+Suivre le Figma
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Ajouter un moreMenu "Faire une contre-pesée/reprod"  (Figma)
 
-## Expanding the ESLint configuration
+Ouvrir la modale de sélection des recettes (Figma)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Une fois la recette sélectionnée, ouvrir la modale de contre-pesée.
 
-- Configure the top-level `parserOptions` property like this:
+ 
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Focus modale de sélection des recettes :
+Dans l'input ce qu'on remonte ce sont les packagingExecutions en barquettage le jour sélectionné, mais on n'affiche que leur uniqueCode et nom. L'input doit être un auto-complete sur la chaine de caractères uniqueCode + nom.
+Il faut afficher un message d'erreur si l'on clique sur valider sans sélectionner de recette. Figma
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Focus modale de contre-pesée.
+Figma
+Dans cette modale, on propose de changer le poids sorti de production pour toutes les sections du packagingExecution.  L'utilisateur peut n'en remplir qu'une ou que certaines (on ne va pas nécessairement peser tous les bacs)
+Gérer l'input de quantité et les tuiles d'affichage du motif de la contre-pesée    
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Message d'erreurs
+Si aucune quantité n'a été rentrée pour aucune section : Figma
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Si la contre-pesée pour une section a été remplie mais qu'aucun motif n'a été saisi  : Figma
+
+### Modale de contre-pesée, cas spécifique : nouvelle contre-pesée sur une section
+S'il y a déjà eu une contre-pesée sur la section, afficher par défaut dans l'input la précédente contre-pesée.
+Et donner la possibilité d'en saisir une nouvelle
+Figma
