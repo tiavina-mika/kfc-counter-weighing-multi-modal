@@ -15,17 +15,18 @@ import {
 import CloseIcon from '@mui/icons-material/Close'
 import * as Yup from "yup"
 import SectionsField from "./SectionsField"
-import { formatPECounterWeighingSectionsInitialValues } from "../utils/utils"
 
 const sectionSchema = Yup.object().shape({
-    weight: Yup.number(),
-    reason: Yup.string().required('Veuillez sélectionné le motif de cette contre-pesée.')
+    counterWeighing: Yup.object().shape({
+        weight: Yup.number(),
+        reason: Yup.string().required('Veuillez sélectionné le motif de cette contre-pesée.'),
+    })
 })
 const schema = Yup.object().shape({
     sections: Yup.array().of(sectionSchema).test(
         'at-least-one-weight',
         'Veuillez compléter la section sur laquelle vous souhaitez faire votre contre-pesée.',
-        (sections) => sections?.some(section => section.weight)
+        (sections) => sections?.some(section => section.counterWeighing?.weight)
     ).min(1, 'Veuillez sélectionner au moins une section.')
 });
 
@@ -71,7 +72,6 @@ const SectionsSelectionDialogForm = ({
     onSubmit,
     packagingExecution,
 }: Props) => {
-    console.log('recipe: ', packagingExecution);
     const formikRef = useRef(null)
     const descriptionElementRef = useRef<HTMLElement>(null);
     useEffect(() => {
@@ -115,8 +115,8 @@ const SectionsSelectionDialogForm = ({
                 <Box ref={descriptionElementRef} tabIndex={-1}>
                     <Formik
                         innerRef={formikRef}
-                        // initialValues={{ sections: packagingExecution?.sections || [] }}
-                        initialValues={{ sections: formatPECounterWeighingSectionsInitialValues(packagingExecution) }}
+                        initialValues={{ sections: packagingExecution?.sections || [] }}
+                        // initialValues={{ sections: formatPECounterWeighingSectionsInitialValues(packagingExecution) }}
                         validationSchema={schema}
                         onSubmit={_handleSubmit}
                     >
