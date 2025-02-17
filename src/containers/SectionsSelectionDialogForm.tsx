@@ -15,6 +15,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close'
 import * as Yup from "yup"
 import SectionsField from "./SectionsField"
+import { formatPECounterWeighingSectionsInitialValues } from "../utils/utils"
 
 const sectionSchema = Yup.object().shape({
     weight: Yup.number(),
@@ -115,7 +116,7 @@ const SectionsSelectionDialogForm = ({
                     <Formik
                         innerRef={formikRef}
                         // initialValues={{ sections: packagingExecution?.sections || [] }}
-                        initialValues={{ sections: packagingExecution?.sections.map((section: Record<string, any>) => ({ ...section, reason: 'broken', weight: 12 })) }}
+                        initialValues={{ sections: formatPECounterWeighingSectionsInitialValues(packagingExecution) }}
                         validationSchema={schema}
                         onSubmit={_handleSubmit}
                     >
