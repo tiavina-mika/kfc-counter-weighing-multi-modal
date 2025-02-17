@@ -248,9 +248,11 @@ const SectionsField = ({
     setFieldValue(`sections[${sectionIndex}].counterWeighing.weight`, +event.target.value)
   }
 
-  // const handleResetSection = () => {
-  //   const prevSection = { ...selectedSection }
-  //   delete prevSection.counterWeighing
+  const handleResetSection = (section: Record<string, any>, sectionIndex: number) => {
+    const prevSection = { ...section }
+    delete prevSection.counterWeighing
+    setFieldValue(`sections[${sectionIndex}]`, prevSection)
+  }
 
   const hasGlobalError = errors && typeof errors === 'string'
 
@@ -363,15 +365,18 @@ const SectionsField = ({
                         )
                       })}
                     </Stack>
-                    <div>
-                      <Button variant="outlined" color="primary">
-                        Faire une nouvelle contre-pesée
-                      </Button>
-                    </div>
+                    {/* reset button */}
+                    {section.counterWeighing && (
+                      <div>
+                        <Button variant="outlined" color="primary" onClick={() => handleResetSection(section, sectionIndex)}>
+                          Faire une nouvelle contre-pesée
+                        </Button>
+                      </div>
+                    )}
                     {/* reason error message */}
-                    {errors && (errors as any)[sectionIndex]?.reason && (
+                    {errors && (errors as any)[sectionIndex]?.counterWeighing.reason && (
                       <Typography color="error" variant="caption">
-                        {(errors as any)[sectionIndex]?.reason}
+                        {(errors as any)[sectionIndex]?.counterWeighing.reason}
                       </Typography>
                     )}
                   </Stack>
