@@ -62,15 +62,15 @@ type Props = {
     onClose: () => void
     open: boolean
     onSubmit: (values: Record<string, any>) => void
-    recipe: Record<string, any> | null
+    packagingExecution: Record<string, any> | null
 }
 const SectionsSelectionDialogForm = ({
     onClose,
     open,
     onSubmit,
-    recipe,
+    packagingExecution,
 }: Props) => {
-    console.log('recipe: ', recipe);
+    console.log('recipe: ', packagingExecution);
     const formikRef = useRef(null)
     const descriptionElementRef = useRef<HTMLElement>(null);
     useEffect(() => {
@@ -98,7 +98,7 @@ const SectionsSelectionDialogForm = ({
     return (
         <Dialog open={open} onClose={onClose} scroll="body" sx={sx.dialog}>
             <DialogTitle sx={{ p: 0 }}>
-                {recipe?.uniqueCode} - {recipe?.name}
+                {packagingExecution?.recipe.uniqueCode} - {packagingExecution?.recipe.name}
             </DialogTitle>
             <IconButton
                 aria-label="close"
@@ -114,8 +114,8 @@ const SectionsSelectionDialogForm = ({
                 <Box ref={descriptionElementRef} tabIndex={-1}>
                     <Formik
                         innerRef={formikRef}
-                        initialValues={{ sections: recipe?.sections || [] }}
-                        // initialValues={{ sections: recipe?.sections.map((section: Record<string, any>) => ({ ...section, reason: 'broken', weight: 10 })) }}
+                        // initialValues={{ sections: packagingExecution?.sections || [] }}
+                        initialValues={{ sections: packagingExecution?.sections.map((section: Record<string, any>) => ({ ...section, reason: 'broken', weight: 12 })) }}
                         validationSchema={schema}
                         onSubmit={_handleSubmit}
                     >
@@ -123,7 +123,7 @@ const SectionsSelectionDialogForm = ({
                             <Form>
                                 <Stack spacing={1}>
                                     <SectionsField
-                                        options={recipe?.sections}
+                                        options={packagingExecution?.sections}
                                         values={values.sections}
                                         setFieldValue={setFieldValue}
                                         errors={errors?.sections}
