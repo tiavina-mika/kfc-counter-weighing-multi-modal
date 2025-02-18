@@ -64,27 +64,34 @@ const SectionsField = ({
   const [selectedSections, setSelectedSections] = useState<Record<string, any>[]>([])
 
   const handleSelectSection = (section: Record<string, any>) => {
-    setSelectedSections(prev => prev.includes(section) ? prev.filter((s: Record<string, any>) => s.objectId !== section.objectId) : [...prev, section])
+    setSelectedSections(prev => {
+      const findSection = prev.find(s => s.section.objectId === section.section.objectId)
+      if (findSection) {
+        return prev.filter(s => s.section.objectId !== section.section.objectId)
+      }
+
+      return [...prev, section]
+    })
   }
 
   const hasGlobalError = errors && typeof errors === 'string'
 
   return (
     <Box sx={sx.sections}>
-      {options.map((section: Record<string, any>, sectionIndex: number) => {
+      {options.map((option: Record<string, any>, sectionIndex: number) => {
         return (
           <StyleAccordion
-            key={section.objectId + sectionIndex}
+            key={option.section.objectId + sectionIndex}
             // expanded={selectedSection?.objectId === section.objectId}
-            expanded={selectedSections.some(s => s.objectId === section.objectId)}
-            onChange={() => handleSelectSection(section)}
+            expanded={selectedSections.some(s => s.section.objectId === option.section.objectId)}
+            onChange={() => handleSelectSection(option)}
             // if error is the global error message or any individual error
             hasError={
               // global error: for all sections
               !!hasGlobalError
               // individual section error: when weight is defined but reason is not
               || !!(errors && Array.isArray(errors) && errors[sectionIndex]
-              && selectedSections.some(s => s.objectId === section.objectId)
+              && selectedSections.some(s => s.section.objectId === option.section.objectId)
             )}
           >
             {/* section details */}
@@ -94,7 +101,7 @@ const SectionsField = ({
               id="panel1-header"
             >
               <Typography component="span" sx={sx.sectionName}>
-                {section.name}
+                {option.sectionName}
               </Typography>
             </AccordionSummary>
             {/* section form */}
@@ -111,7 +118,7 @@ const SectionsField = ({
                   errors={errors}
                   setFieldValue={setFieldValue}
                   sectionIndex={sectionIndex}
-                  section={section}
+                  section={option}
                 />
               </Stack>
             </AccordionDetails>
