@@ -15,8 +15,12 @@ const App = () => {
 
   const handleSelectRecipe = (values: Record<string, any>) => {
     setSelectedPackagingExecution(values.recipe)
-    toggleOpenRecipeDialog()
   }
+
+  const handleCloseSectionsDialog = () => {
+		setSelectedPackagingExecution(null)
+    toggleOpenRecipeDialog()
+	}
 
   const handleSubmitSections = (values: Record<string, any>) => {
     console.log('values', values)
@@ -57,7 +61,7 @@ const App = () => {
       <SectionsSelectionDialogForm
         packagingExecution={selectedPackagingExecution}
         open={!!selectedPackagingExecution}
-        onClose={() => setSelectedPackagingExecution(null)}
+        onClose={handleCloseSectionsDialog}
         onSubmit={handleSubmitSections}
       />
     </Box>
