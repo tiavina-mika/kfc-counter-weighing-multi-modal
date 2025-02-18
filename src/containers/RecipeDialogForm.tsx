@@ -15,6 +15,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import * as Yup from "yup"
 import FormikAutocompleteField from "../components/FormikAutocompleteField"
 import { searchRecipesByUniqueCodeOrName } from "../utils/utils"
+import { packagingExecutions } from "../utils/data"
 
 const schema = Yup.object().shape({
     recipe: Yup.object().required('Veuillez saisir la recette sur laquelle vous souhaitez faire une contre-pesée.')
@@ -61,7 +62,7 @@ const RecipeDialogForm = ({
     }
 
     const handleSearchRecipes = (search: string) => {
-        const recipes = searchRecipesByUniqueCodeOrName(search)
+        const recipes = searchRecipesByUniqueCodeOrName(packagingExecutions, search)
         setSearchedRecipes(recipes)
     }
   
