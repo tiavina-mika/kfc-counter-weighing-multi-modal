@@ -28,9 +28,9 @@ const formatOptions = (recipes: Record<string, any>[] = []) => {
     }))
 }
 
-const getOptionLabel = (recipe: Record<string, any>) => {
-    const name = recipe.name.toLowerCase()
-    const label = recipe.uniqueCode ? recipe.uniqueCode + " - " + name : name
+const getOptionLabel = (pe: Record<string, any>) => {
+    const name = pe.recipeName.toLowerCase()
+    const label = pe.uniqueCode ? pe.uniqueCode + " - " + name : name
     return label
 }  
 
