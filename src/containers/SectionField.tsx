@@ -218,7 +218,7 @@ const SectionField = ({
   const hasGlobalError = errors && typeof errors === 'string'
 
   return (
-    <Stack alignItems="center" spacing={16}>
+    <Stack alignItems="center" spacing={16 / 6}>
       {/* ------- top: weight ------- */}
       <Box sx={sx.weightContainer}>
         <Stack direction="row" sx={{ gap: "96px" }}>
