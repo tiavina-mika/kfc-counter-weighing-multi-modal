@@ -7,7 +7,7 @@ import { Box, Stack, styled } from '@mui/material';
 import { useState } from 'react';
 import { FormikErrors } from 'formik';
 import { COLORS } from '../utils/constants';
-import SectionField from './SectionFied';
+import SectionField from './SectionField';
 
 const primaryColor = COLORS.primary
 const errorColor = COLORS.error
