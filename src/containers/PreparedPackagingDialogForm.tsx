@@ -47,11 +47,12 @@ const PreparedPackagingDialogForm = ({
 
     const handleChange = (inputValue: number) => {
         setTouched(true)
+        if (error) setError("")
         setValue(inputValue)
     }
     const handleConfirm = () => {
-        if (touched && value <= 0) {
-            setError("Veuillez saisir un nombre valide")
+        if (!touched && value <= 0) {
+            setError("Veuillez saisir le nombre de barquettes qui ont déjà été réalisées.")
             return
         }
         onSubmit({ weight: value })
@@ -96,9 +97,11 @@ const PreparedPackagingDialogForm = ({
                     hasError={!!error}
                     sxColumn={sx.column}
                 />
-                <FormHelperText error={!!error}>
-                    {error}
-                </FormHelperText>
+                {error && (
+                    <FormHelperText error={!!error} sx={{ marginTop: "24px" }}>
+                        {error}
+                    </FormHelperText>
+                )}
             </DialogContent>
             {/* dialog footer */}
             <DialogActions  sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
