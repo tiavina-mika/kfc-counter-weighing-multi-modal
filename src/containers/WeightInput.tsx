@@ -76,8 +76,6 @@ const sx = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '32px 0px',
-    gap: '16px'
   },
   weightColumn: {
     display: 'flex',
