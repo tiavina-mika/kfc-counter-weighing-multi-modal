@@ -19,7 +19,11 @@ import SectionsField from "./SectionsField"
 const sectionSchema = Yup.object().shape({
     counterWeighing: Yup.object().shape({
         weight: Yup.number(),
-        reason: Yup.string().required('Veuillez sélectionné le motif de cette contre-pesée.'),
+        reason: Yup.string().when('weight', (weight: any, schema: any) => {
+            return weight > 0
+                ? schema.required('Veuillez sélectionner le motif de cette contre-pesée.')
+                : schema.notRequired();
+        }),
     })
 })
 const schema = Yup.object().shape({
