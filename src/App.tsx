@@ -4,14 +4,17 @@ import RecipeDialogForm from './containers/RecipeDialogForm';
 import { AppBar, Box, CssBaseline, Toolbar, Typography } from '@mui/material';
 import SectionsSelectionDialogForm from './containers/SectionsSelectionDialogForm';
 import Recipes from './containers/Recipes';
-import { packagingExecutions } from './utils/data';
+import PreparedPackagingDialogForm from './containers/PreparedPackagingDialogForm';
+// import { packagingExecutions } from './utils/data';
 
 const App = () => {
   const [isOpenRecipeDialog, setIsOpenRecipeDialog] = useState(false)
-  // const [selectedRecipe, setSelectedRecipe] = useState<Record<string, any> | null>(null)
-  const [selectedPackagingExecution, setSelectedPackagingExecution] = useState<Record<string, any> | null>(packagingExecutions[0])
+  const [selectedPackagingExecution, setSelectedPackagingExecution] = useState<Record<string, any> | null>(null)
+  // const [selectedPackagingExecution, setSelectedPackagingExecution] = useState<Record<string, any> | null>(packagingExecutions[0])
+  const [isOpenPreparedPackagingDialog, setIsOpenPreparedPackagingDialog] = useState(false)
 
   const toggleOpenRecipeDialog = () => setIsOpenRecipeDialog(!isOpenRecipeDialog)
+  const toggleOpenPreparedPackagingDialog = () => setIsOpenPreparedPackagingDialog(!isOpenPreparedPackagingDialog)
 
   const handleSelectRecipe = (values: Record<string, any>) => {
     setSelectedPackagingExecution(values.recipe)
@@ -23,7 +26,11 @@ const App = () => {
 	}
 
   const handleSubmitSections = (values: Record<string, any>) => {
-    console.log('values', values)
+    console.log('handleSubmitSections values', values)
+  }
+
+  const handleSubmitPreparedPackaging = (values: Record<string, any>) => {
+    console.log('handleSubmitPreparedPackaging values', values)
   }
 
   return (
@@ -63,6 +70,12 @@ const App = () => {
         open={!!selectedPackagingExecution}
         onClose={handleCloseSectionsDialog}
         onSubmit={handleSubmitSections}
+      />
+      <PreparedPackagingDialogForm
+        open
+        onClose={toggleOpenPreparedPackagingDialog}
+        packagingExecution={selectedPackagingExecution}
+        onSubmit={handleSubmitPreparedPackaging}
       />
     </Box>
   );
