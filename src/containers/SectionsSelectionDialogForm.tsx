@@ -99,7 +99,7 @@ const SectionsSelectionDialogForm = ({
     return (
         <Dialog open={open} onClose={onClose} scroll="body" sx={sx.dialog}>
             <DialogTitle sx={{ p: 0 }}>
-                {packagingExecution?.recipe.uniqueCode} - {packagingExecution?.recipe.name}
+                {packagingExecution?.uniqueCode} - {packagingExecution?.recipeName}
             </DialogTitle>
             <IconButton
                 aria-label="close"
