@@ -72,7 +72,8 @@ const App = () => {
         onSubmit={handleSubmitSections}
       />
       <PreparedPackagingDialogForm
-        open={isOpenPreparedPackagingDialog}
+        open
+        // open={isOpenPreparedPackagingDialog}
         onClose={toggleOpenPreparedPackagingDialog}
         packagingExecution={selectedPackagingExecution}
         onSubmit={handleSubmitPreparedPackaging}
