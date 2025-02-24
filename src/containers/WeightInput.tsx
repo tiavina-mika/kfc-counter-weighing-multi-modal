@@ -156,6 +156,7 @@ type Props = {
   inputLabel: string
   onChange: (value: number) => void
   sxColumn?: Record<string, any>
+  sxRoot?: Record<string, any>
 }
 
 const WeightInput = ({
@@ -166,14 +167,15 @@ const WeightInput = ({
   valueLabel,
   subtitle,
   inputLabel,
-  sxColumn
+  sxColumn,
+  sxRoot
 }: Props) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(+event.target.value)
   }
 
   return (
-    <Box sx={sx.weightContainer}>
+    <Box sx={{ ...sx.weightContainer, ...sxRoot }}>
       <Stack direction="row" sx={{ gap: "96px" }}>
         {/* label */}
         <Box sx={{ ...sx.weightColumn, ...sxColumn }}>
