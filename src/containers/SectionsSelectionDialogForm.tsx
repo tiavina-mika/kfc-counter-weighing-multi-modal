@@ -123,21 +123,25 @@ const SectionsSelectionDialogForm = ({
                         validationSchema={schema}
                         onSubmit={_handleSubmit}
                     >
-                        {({ errors, setFieldValue, values }) => (
-                            <Form>
-                                <Stack spacing={1}>
-                                    <SectionsField
-                                        options={packagingExecution?.sections}
-                                        values={values.sections}
-                                        setFieldValue={setFieldValue}
-                                        errors={errors?.sections}
-                                    />
-                                    {errors?.sections && typeof errors.sections === 'string' && (
-                                        <FormHelperText error>{errors.sections}</FormHelperText>
-                                    )}
-                                </Stack>
-                            </Form>
-                        )}
+                        {({ errors, setFieldValue, values, setFieldTouched, touched }) => {
+                            return (
+                                <Form>
+                                    <Stack spacing={1}>
+                                        <SectionsField
+                                            options={packagingExecution?.sections}
+                                            values={values.sections}
+                                            setFieldValue={setFieldValue}
+                                            errors={errors?.sections}
+                                            setFieldTouched={setFieldTouched}
+                                            touched={touched}
+                                        />
+                                        {errors?.sections && typeof errors.sections === 'string' && (
+                                            <FormHelperText error>{errors.sections}</FormHelperText>
+                                        )}
+                                    </Stack>
+                                </Form>
+                            )
+                        }}
                     </Formik>
                 </Box>
             </DialogContent>
