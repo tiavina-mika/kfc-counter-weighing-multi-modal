@@ -12,6 +12,7 @@ import {
 } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close'
 import WeightInput from "./WeightInput"
+import { COLORS } from "../utils/constants"
 
 const sx = {
     dialog: {
@@ -20,6 +21,13 @@ const sx = {
             padding: '32px 24px',
             gap: '40px'
         },
+    },
+    title: {
+        color: COLORS.primary,
+        fontStyle: 'normal',
+        fontWeight: 500,
+        lineHeight: 1.33,
+        padding: "0px"
     },
     alert: {
         marginBottom: "40px"
@@ -72,7 +80,7 @@ const PreparedPackagingDialogForm = ({
     return (
         <Dialog open={open} onClose={onClose} sx={sx.dialog}>
             {/* dialog top */}
-            <DialogTitle>
+            <DialogTitle sx={sx.title}>
                 {packagingExecution?.recipeName}
             </DialogTitle>
             <IconButton
