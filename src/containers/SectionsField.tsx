@@ -5,9 +5,8 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box, Stack, styled } from '@mui/material';
 import { useState } from 'react';
-import { FormikErrors } from 'formik';
 import { COLORS } from '../utils/constants';
-import SectionField from './SectionField';
+import SectionField, { SectionFieldProps } from './SectionField';
 
 const primaryColor = COLORS.primary
 const errorColor = COLORS.error
@@ -50,16 +49,15 @@ const sx = {
 
 type Props = {
   options: Record<string, any>[]
-  values: Record<string, any>[]
-  setFieldValue: (field: string, value: any) => void
-  errors?: Record<string, any>[] | string | undefined | string[] | FormikErrors<any> | FormikErrors<any>[]
-}
+} & Omit<SectionFieldProps, 'section' | 'sectionIndex'>;
 
 const SectionsField = ({
   options = [],
   values = [],
   errors,
-  setFieldValue
+  setFieldValue,
+  setFieldTouched,
+  touched,
 }: Props) => {
   const [selectedSections, setSelectedSections] = useState<Record<string, any>[]>([])
 
@@ -119,6 +117,8 @@ const SectionsField = ({
                   setFieldValue={setFieldValue}
                   sectionIndex={sectionIndex}
                   section={option}
+                  setFieldTouched={setFieldTouched}
+                  touched={touched}
                 />
               </Stack>
             </AccordionDetails>
