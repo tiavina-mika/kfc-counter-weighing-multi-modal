@@ -60,12 +60,14 @@ const reasons = [
   { value: 'other', label: 'Autre', icon: 'packaging-help' },
 ]
 
-type Props = {
+export type SectionFieldProps = {
   values: Record<string, any>[]
   setFieldValue: (field: string, value: any) => void
   errors?: Record<string, any>[] | string | undefined | string[] | FormikErrors<any> | FormikErrors<any>[],
   sectionIndex: number
   section: Record<string, any>
+  setFieldTouched?: (field: string) => void
+  touched?: Record<string, any>
 }
 
 const SectionField = ({
@@ -73,14 +75,18 @@ const SectionField = ({
   errors,
   setFieldValue,
   sectionIndex,
-  section
-}: Props) => {
+  section,
+  setFieldTouched,
+  touched,
+}: SectionFieldProps) => {
   const handleSelectReason = (reason: Record<string, any>, sectionIndex: number) => {
     setFieldValue(`sections[${sectionIndex}].counterWeighing.reason`, reason.value)
   }
 
   const handleChangeWeight = (sectionIndex: number) => (value: number) => {
     setFieldValue(`sections[${sectionIndex}].counterWeighing.weight`, value)
+    if (!setFieldTouched) return
+    setFieldTouched(`sections[${sectionIndex}].counterWeighing.weight`);
   }
 
   const handleResetSection = (section: Record<string, any>, sectionIndex: number) => {
@@ -108,6 +114,7 @@ const SectionField = ({
           || !!hasGlobalError
         }
         sxRoot={sx.weightContainer}
+        isTouched={touched?.sections && touched.sections[sectionIndex]?.counterWeighing?.weight}
       />
       {/* -------- bottom: reason -------- */}
       <Stack spacing={16 / 6} sx={{ alignSelf: "stretch" }}>
@@ -144,7 +151,7 @@ const SectionField = ({
           </div>
         )}
         {/* reason error message */}
-        {errors && (errors as any)[sectionIndex]?.counterWeighing.reason && (
+        {errors && (errors as any)[sectionIndex]?.counterWeighing?.reason && (
           <Typography color="error" variant="caption">
             {(errors as any)[sectionIndex]?.counterWeighing.reason}
           </Typography>
