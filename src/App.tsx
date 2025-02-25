@@ -5,7 +5,6 @@ import { AppBar, Box, CssBaseline, Toolbar, Typography } from '@mui/material';
 import SectionsSelectionDialogForm from './containers/SectionsSelectionDialogForm';
 import Recipes from './containers/Recipes';
 import PreparedPackagingDialogForm from './containers/PreparedPackagingDialogForm';
-// import { packagingExecutions } from './utils/data';
 
 const App = () => {
   const [isOpenRecipeDialog, setIsOpenRecipeDialog] = useState(false)
@@ -27,6 +26,7 @@ const App = () => {
 
   const handleSubmitSections = (values: Record<string, any>) => {
     console.log('handleSubmitSections values', values)
+    toggleOpenPreparedPackagingDialog()
   }
 
   const handleSubmitPreparedPackaging = (values: Record<string, any>) => {
@@ -71,9 +71,9 @@ const App = () => {
         onClose={handleCloseSectionsDialog}
         onSubmit={handleSubmitSections}
       />
+      {/* 3. prepared packaging form */}
       <PreparedPackagingDialogForm
-        open
-        // open={isOpenPreparedPackagingDialog}
+        open={isOpenPreparedPackagingDialog}
         onClose={toggleOpenPreparedPackagingDialog}
         packagingExecution={selectedPackagingExecution}
         onSubmit={handleSubmitPreparedPackaging}
