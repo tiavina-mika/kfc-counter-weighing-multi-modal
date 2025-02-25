@@ -21,8 +21,11 @@ const sx = {
             gap: '40px'
         },
     },
-    content: {
-        marginBottom: "24px"
+    alert: {
+        marginBottom: "40px"
+    },
+    description: {
+        marginBottom: "40px"
     },
     column: {
         width: "100%",
@@ -81,10 +84,10 @@ const PreparedPackagingDialogForm = ({
             </IconButton>
             {/* dialog content */}
             <DialogContent sx={{ p: 0, overflow: 'hidden' }}>
-                <Alert severity="info" sx={sx.content}>
+                <Alert severity="info" sx={sx.alert}>
                     Choisissez la recette pour laquelle vous souhaitez faire une contre-pesée.
                 </Alert>
-                <DialogContentText sx={sx.content}>
+                <DialogContentText sx={sx.description}>
                     Veuillez compter  le nombre total de barquettes déjà réalisées.
                 </DialogContentText>
                 <WeightInput
