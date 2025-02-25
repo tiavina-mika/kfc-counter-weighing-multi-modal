@@ -96,6 +96,7 @@ const PreparedPackagingDialogForm = ({
                     inputLabel="Nombre de barquettes réalisées"
                     hasError={!!error}
                     sxColumn={sx.column}
+                    isTouched={touched}
                 />
                 {error && (
                     <FormHelperText error={!!error} sx={{ marginTop: "24px" }}>
