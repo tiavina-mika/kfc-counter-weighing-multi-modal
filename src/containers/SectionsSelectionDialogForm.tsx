@@ -93,7 +93,6 @@ const SectionsSelectionDialogForm = ({
 
     const _handleSubmit = (values: Record<string, any>) => {
         onSubmit(values)
-        onClose()
     }
 
     const handleCancel = () => {
