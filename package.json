@@ -1,8 +1,9 @@
 {
-  "name": "my-react-app",
+  "name": "kfc-packaging-counter-weighing",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": "tiavinamika@gmail.com",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
