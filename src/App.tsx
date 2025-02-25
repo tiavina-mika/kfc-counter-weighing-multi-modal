@@ -9,6 +9,7 @@ import PreparedPackagingDialogForm from './containers/PreparedPackagingDialogFor
 const App = () => {
   const [isOpenRecipeDialog, setIsOpenRecipeDialog] = useState(false)
   const [selectedPackagingExecution, setSelectedPackagingExecution] = useState<Record<string, any> | null>(null)
+  const [isOpenSectionsDialog, setIsOpenSectionsDialog] = useState(false)
   // const [selectedPackagingExecution, setSelectedPackagingExecution] = useState<Record<string, any> | null>(packagingExecutions[0])
   const [isOpenPreparedPackagingDialog, setIsOpenPreparedPackagingDialog] = useState(false)
 
@@ -17,16 +18,19 @@ const App = () => {
 
   const handleSelectRecipe = (values: Record<string, any>) => {
     setSelectedPackagingExecution(values.recipe)
+    setIsOpenSectionsDialog(true)
   }
 
   const handleCloseSectionsDialog = () => {
-		setSelectedPackagingExecution(null)
+		// setSelectedPackagingExecution(null)
+    setIsOpenSectionsDialog(false)
     toggleOpenRecipeDialog()
 	}
 
   const handleSubmitSections = (values: Record<string, any>) => {
     console.log('handleSubmitSections values', values)
     toggleOpenPreparedPackagingDialog()
+    setIsOpenSectionsDialog(false)
   }
 
   const handleSubmitPreparedPackaging = (values: Record<string, any>) => {
@@ -67,7 +71,7 @@ const App = () => {
       {/* 2. sections modal */}
       <SectionsSelectionDialogForm
         packagingExecution={selectedPackagingExecution}
-        open={!!selectedPackagingExecution}
+        open={isOpenSectionsDialog}
         onClose={handleCloseSectionsDialog}
         onSubmit={handleSubmitSections}
       />
