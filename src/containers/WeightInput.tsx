@@ -10,7 +10,7 @@ const grayColor = COLORS.gray
 
 const StyledWeightInput = styled(TextField, {
   shouldForwardProp: (prop) => prop !== "isPositiveNumber"
-})(({ isPositiveNumber = false }: { isPositiveNumber: boolean }) => {
+})(({ isPositiveNumber = false, isTouched = false }: { isPositiveNumber: boolean; isTouched: boolean }) => {
   const styles: Record<string, any> = {
     flex: 1,
     padding: 0,
@@ -44,6 +44,11 @@ const StyledWeightInput = styled(TextField, {
     styles['& .MuiInputBase-input'] = {
       ...styles['& .MuiInputBase-input'],
       color: activeColor
+    }
+  } else if (!isTouched) {
+    styles['& .MuiInputBase-input'] = {
+      ...styles['& .MuiInputBase-input'],
+      color: "#ccc"
     }
   }
 
@@ -155,6 +160,7 @@ type Props = {
   onChange: (value: number) => void
   sxColumn?: Record<string, any>
   sxRoot?: Record<string, any>
+  isTouched?: boolean
 }
 
 const WeightInput = ({
@@ -166,7 +172,8 @@ const WeightInput = ({
   subtitle,
   inputLabel,
   sxColumn,
-  sxRoot
+  sxRoot,
+  isTouched = false
 }: Props) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(+event.target.value)
@@ -200,6 +207,7 @@ const WeightInput = ({
               value={value}
               onChange={handleChange}
               isPositiveNumber={value > 0}
+              isTouched={isTouched}
             />
             <StyledWeightInputBorderBottom
               hasError={hasError}
