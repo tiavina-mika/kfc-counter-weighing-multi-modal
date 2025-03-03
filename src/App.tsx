@@ -16,7 +16,7 @@ const App = () => {
   const toggleOpenRecipeDialog = () => setIsOpenRecipeDialog(!isOpenRecipeDialog)
   const toggleOpenPreparedPackagingDialog = () => setIsOpenPreparedPackagingDialog(!isOpenPreparedPackagingDialog)
 
-  const handleSelectRecipe = (values: Record<string, any>) => {
+  const handleSubmitRecipe = (values: Record<string, any>) => {
     setSelectedPackagingExecution(values.recipe)
     setIsOpenSectionsDialog(true)
   }
@@ -35,6 +35,7 @@ const App = () => {
 
   const handleSubmitPreparedPackaging = (values: Record<string, any>) => {
     console.log('handleSubmitPreparedPackaging values', values)
+    toggleOpenRecipeDialog()
   }
 
   return (
@@ -66,7 +67,7 @@ const App = () => {
       <RecipeDialogForm
         onClose={toggleOpenRecipeDialog}
         open={isOpenRecipeDialog}
-        onSubmit={handleSelectRecipe}
+        onSubmit={handleSubmitRecipe}
       />
       {/* 2. sections modal */}
       <SectionsSelectionDialogForm
